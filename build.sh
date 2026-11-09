@@ -13,5 +13,6 @@ wrap() {
   } > "$2"
   echo "$2 gerado"
 }
+python3 tools/embed-fonts.py
 wrap src/thp.html index.html
 wrap src/casa.html casa.html
