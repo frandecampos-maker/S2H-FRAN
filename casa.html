@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>Casa de Ferramentas THP</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: scrapbook digital da frandecampos. Capa com saturno discoball, "sempre à mão" como cards colados com fita,
+   e uma gaveta por módulo do curso (4 níveis + bônus). Cada ferramenta mostra em quais aulas aparece. */
+:root{
+  --paper:#fff4f9;      /* rosa claro · respiro */
+  --surface:#ffffff;
+  --sunk:#fbe3ef;
+  --ink:#16101a;        /* preto · contraste e autoridade */
+  --muted:#6d5a68;
+  --line:#efcfe0;
+  --neon:#ff2e9a;       /* rosa neon · assinatura */
+  --neon-ink:#ffffff;
+  --neon-soft:#ffd7ec;
+  --lilac:#c8b5ff;      /* lilás · respiro */
+  --lilac-soft:#ece5ff;
+  --acid:#e6ff3d;       /* amarelo ácido · quebra de padrão */
+  --wine:#7d1640;       /* bordô · acento maduro */
+  --tape:rgba(230,255,61,.78);
+  --ok:#14804f; --ok-soft:#dcf5e8;
+  --soon:#7a5b00; --soon-soft:#fbefc4;
+  --upd:#5b3fc2; --upd-soft:#ebe4ff;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:14px;
+  --shadow:0 1px 0 var(--line),0 10px 24px -18px rgba(125,22,64,.45);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#140c13; --surface:#1e131d; --sunk:#2a1828; --ink:#fdeef6; --muted:#c3a7b9; --line:#3d2539;
+    --neon:#ff4fae; --neon-ink:#16060f; --neon-soft:#4a1734; --lilac:#b7a1ff; --lilac-soft:#2b2148;
+    --acid:#e6ff3d; --wine:#ff9cc6; --tape:rgba(230,255,61,.55);
+    --ok:#62d69d; --ok-soft:#163626; --soon:#f1cf5b; --soon-soft:#3a2f0e; --upd:#b7a1ff; --upd-soft:#2b2148;
+    --shadow:0 1px 0 var(--line),0 12px 26px -18px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#140c13; --surface:#1e131d; --sunk:#2a1828; --ink:#fdeef6; --muted:#c3a7b9; --line:#3d2539;
+  --neon:#ff4fae; --neon-ink:#16060f; --neon-soft:#4a1734; --lilac:#b7a1ff; --lilac-soft:#2b2148;
+  --acid:#e6ff3d; --wine:#ff9cc6; --tape:rgba(230,255,61,.55);
+  --ok:#62d69d; --ok-soft:#163626; --soon:#f1cf5b; --soon-soft:#3a2f0e; --upd:#b7a1ff; --upd-soft:#2b2148;
+  --shadow:0 1px 0 var(--line),0 12px 26px -18px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.55;
+  background-image:radial-gradient(circle at 1px 1px,var(--line) 1px,transparent 0);background-size:22px 22px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.serif{font-family:var(--f-serif);font-style:italic;font-weight:400}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* capa */
+.hero{padding-block:36px 26px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.74rem;letter-spacing:.08em;
+  background:var(--ink);color:var(--paper);padding:5px 10px;border-radius:999px}
+.kicker b{color:var(--acid);font-weight:500}
+.hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(2.3rem,7.2vw,5.2rem);line-height:.92;letter-spacing:-.035em;margin-top:16px}
+.hero h1 .serif{font-size:1.08em;letter-spacing:-.01em;color:var(--neon);display:inline-block;transform:translateY(.04em)}
+.hero .lede{max-width:60ch;margin-top:16px;font-size:1.06rem;color:var(--ink)}
+.hero .lede em{font-style:normal;background:var(--acid);padding:1px 4px;color:#16101a;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.disco{width:clamp(120px,20vw,210px);height:auto;flex:none;color:var(--ink)}
+.disco .ball{animation:spin 14s linear infinite;transform-origin:100px 100px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.disco .ball{animation:none}}
+.stats{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:20px;font-size:.92rem;color:var(--muted)}
+.stats b{font-family:var(--f-display);font-size:1.15rem;color:var(--ink);margin-right:4px}
+
+/* barra fixa: busca + filtros */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-block:1px solid var(--line)}
+.bar .wrap{display:flex;flex-direction:column;gap:10px;padding-block:12px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{flex:1 1 260px;min-width:0;display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--ink);
+  border-radius:999px;padding:8px 14px}
+.search svg{flex:none}
+.search input{border:0;background:transparent;outline:none;width:100%;min-width:0;font-size:1rem}
+.views{display:flex;background:var(--surface);border:1.5px solid var(--ink);border-radius:999px;padding:3px}
+.views button{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-weight:600;font-size:.9rem;cursor:pointer;white-space:nowrap}
+.views button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:.84rem;font-weight:600;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--neon);background:var(--neon);color:var(--neon-ink)}
+.chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--c,var(--muted))}
+.chip[aria-pressed="true"] .dot{background:var(--neon-ink)}
+
+/* sempre à mão */
+.handy{padding-block:30px 6px}
+.sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.sec-h h2{font-family:var(--f-display);font-weight:700;font-size:1.35rem;letter-spacing:-.02em}
+.sec-h p{color:var(--muted);font-size:.95rem}
+.pins{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.pin{position:relative;display:flex;flex-direction:column;gap:6px;text-decoration:none;background:var(--surface);border:1.5px solid var(--ink);
+  border-radius:4px;padding:20px 16px 16px;box-shadow:4px 4px 0 var(--ink);transition:transform .15s ease,box-shadow .15s ease}
+.pin:nth-child(odd){transform:rotate(-.8deg)}
+.pin:nth-child(even){transform:rotate(.7deg)}
+.pin:hover{transform:rotate(0) translate(-2px,-2px);box-shadow:6px 6px 0 var(--neon)}
+.pin::before{content:"";position:absolute;top:-10px;left:50%;width:74px;height:20px;transform:translateX(-50%) rotate(-3deg);background:var(--tape)}
+.pin .emo{font-size:1.4rem;line-height:1}
+.pin b{font-family:var(--f-display);font-weight:700;font-size:.98rem;letter-spacing:-.01em}
+.pin span{color:var(--muted);font-size:.9rem}
+.pin i{font-style:normal;font-family:var(--f-mono);font-size:.72rem;color:var(--neon);margin-top:auto;padding-top:6px}
+
+/* como usar */
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:26px}
+.how div{background:var(--lilac-soft);border-radius:var(--r);padding:14px 16px;font-size:.92rem}
+.how b{display:block;font-family:var(--f-display);font-size:.8rem;font-weight:700;letter-spacing:.02em;margin-bottom:4px}
+
+/* gavetas de módulo */
+main{padding-block:18px 40px}
+.level{margin-top:34px}
+.level-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.level-h .tag{font-family:var(--f-mono);font-size:.74rem;padding:4px 10px;border-radius:999px;background:var(--lc);color:#16101a;white-space:nowrap}
+.level-h h2{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.05}
+.level-h p{color:var(--muted);font-size:.92rem}
+.module{border-top:1.5px solid var(--ink);padding-top:16px;margin-top:18px}
+.mod-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.mod-h .num{font-family:var(--f-display);font-weight:900;font-size:1.9rem;line-height:1;color:var(--lc);-webkit-text-stroke:1.5px var(--ink);letter-spacing:-.03em}
+.mod-h h3{font-family:var(--f-display);font-weight:700;font-size:1.08rem;letter-spacing:-.015em}
+.mod-h .count{margin-left:auto;font-family:var(--f-mono);font-size:.75rem;color:var(--muted);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+
+.card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);min-width:0}
+.card.soon{background:transparent;border-style:dashed;box-shadow:none}
+.card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.type{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:var(--sunk);color:var(--ink)}
+.type.canva{background:var(--lilac-soft)}
+.type.form{background:var(--neon-soft)}
+.type.comunidade,.type.link{background:var(--soon-soft)}
+.status{font-size:.74rem;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.status.ok{background:var(--ok-soft);color:var(--ok)}
+.status.upd{background:var(--upd-soft);color:var(--upd)}
+.status.soon{background:var(--soon-soft);color:var(--soon)}
+.icons{margin-left:auto;display:flex;gap:4px}
+.ic{border:1px solid var(--line);background:var(--surface);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;cursor:pointer;font-size:.95rem;line-height:1}
+.ic[aria-pressed="true"].fav{background:var(--neon);border-color:var(--neon);color:var(--neon-ink)}
+.ic[aria-pressed="true"].done{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.card h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:-.015em;line-height:1.25;text-wrap:balance}
+.card p.desc{font-size:.92rem;color:var(--muted)}
+.lessons{display:flex;flex-direction:column;gap:3px;font-size:.84rem;border-top:1px dashed var(--line);padding-top:9px}
+.lessons div{display:flex;gap:8px;min-width:0}
+.lessons .mono{color:var(--neon);font-size:.75rem;padding-top:2px;flex:none;width:3.4em}
+.lessons span:last-child{min-width:0}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:700;font-size:.86rem;padding:8px 13px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper)}
+.btn:hover{background:var(--neon);border-color:var(--neon);color:var(--neon-ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--neon-soft);color:var(--ink);border-color:var(--neon)}
+.soon-note{font-size:.85rem;color:var(--soon);font-weight:600}
+.card.is-done h4{text-decoration:line-through;text-decoration-color:var(--neon);text-decoration-thickness:2px}
+
+.empty{display:none;text-align:center;padding:48px 16px;border:1.5px dashed var(--line);border-radius:var(--r);margin-top:30px}
+.empty b{display:block;font-family:var(--f-display);font-size:1.1rem;margin-bottom:6px}
+.empty.show{display:block}
+
+/* rodapé */
+.foot{border-top:1.5px solid var(--ink);padding-block:28px 40px;background:var(--ink);color:var(--paper)}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px;align-items:center}
+.foot h2{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05}
+.foot h2 b{font-family:var(--f-display);font-style:normal;font-weight:900;color:var(--acid);font-size:.78em;letter-spacing:-.03em}
+.foot p{color:color-mix(in srgb,var(--paper) 75%,transparent);margin-top:10px;font-size:.95rem}
+.foot .btn{background:var(--acid);border-color:var(--acid);color:#16101a}
+.foot .btn:hover{background:var(--neon);border-color:var(--neon);color:#fff}
+.foot .fine{font-family:var(--f-mono);font-size:.72rem;margin-top:18px;opacity:.7}
+
+@media (max-width:640px){
+  .hero .wrap{grid-template-columns:1fr}
+  .disco{position:absolute;right:max(8px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 74px);width:96px}
+  .hero{position:relative}
+  .hero h1{padding-right:84px}
+  .foot .wrap{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="kicker">the higher path <b>2027</b> · frandecampos</span>
+      <h1>casa de<br><span class="serif">ferramentas</span></h1>
+      <p class="lede">aqui mora tudo que você usa no curso: templates de Notion e Canva, formulários, kits e guias, organizados pelos mesmos módulos das aulas. abre, duplica e usa no seu dia a dia como social media estratégica. <em>o caos não entra, só organização e poder de execução.</em></p>
+      <div class="stats" id="stats" aria-live="polite"></div>
+    </div>
+    <svg class="disco" viewBox="0 0 200 200" role="img" aria-label="saturno discoball">
+      <defs>
+        <clipPath id="ballclip"><circle cx="100" cy="100" r="58"/></clipPath>
+        <radialGradient id="shine" cx="38%" cy="32%" r="70%">
+          <stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#ffc2e2"/><stop offset="1" stop-color="#ff2e9a"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="100" cy="104" rx="96" ry="24" fill="none" stroke="currentColor" stroke-width="9" transform="rotate(-16 100 104)"/>
+      <g class="ball">
+        <circle cx="100" cy="100" r="58" fill="url(#shine)" stroke="#16101a" stroke-width="3"/>
+        <g clip-path="url(#ballclip)" stroke="#16101a" stroke-opacity=".35" stroke-width="1.4" fill="none">
+          <path d="M42 70H158M42 85H158M42 100H158M42 115H158M42 130H158"/>
+          <path d="M100 42V158M80 44C70 70 70 130 80 156M120 44C130 70 130 130 120 156M62 54C48 80 48 120 62 146M138 54C152 80 152 120 138 146"/>
+        </g>
+        <rect x="74" y="66" width="11" height="11" fill="#e6ff3d" opacity=".9"/>
+        <rect x="112" y="118" width="9" height="9" fill="#c8b5ff" opacity=".9"/>
+      </g>
+      <path d="M28 104 A96 24 -16 0 0 172 108" fill="none" stroke="currentColor" stroke-width="9" transform="rotate(-16 100 104)"/>
+      <path d="M168 34l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#e6ff3d" stroke="#16101a" stroke-width="2"/>
+      <path d="M30 150l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#ff2e9a" stroke="#16101a" stroke-width="1.5"/>
+    </svg>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="row">
+      <label class="search" for="q">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <span class="sr">buscar ferramenta</span>
+        <input id="q" type="search" placeholder="busca por ferramenta, aula ou código (ex: precificação, 7.06)" autocomplete="off">
+      </label>
+      <div class="views" role="group" aria-label="o que mostrar">
+        <button type="button" id="v-all" aria-pressed="true">tudo</button>
+        <button type="button" id="v-ok" aria-pressed="false">disponíveis</button>
+        <button type="button" id="v-fav" aria-pressed="false">★ minhas</button>
+      </div>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="filtrar por nível ou tipo"></div>
+  </div>
+</div>
+
+<section class="handy">
+  <div class="wrap">
+    <div class="sec-h"><h2>sempre à mão</h2><p>o que você vai abrir toda semana, do primeiro dia até o fim do curso.</p></div>
+    <div class="pins" id="pins"></div>
+    <div class="how">
+      <div><b>template de notion</b>abre o link e clica em <strong>duplicar</strong>, no canto de cima. a cópia vai pro seu workspace e é sua pra editar.</div>
+      <div><b>template de canva</b>abre o link e clica em <strong>usar como modelo</strong>. troca cores, fontes e fotos pela sua identidade.</div>
+      <div><b>★ e ✓</b>marca com estrela o que você mais usa e com ✓ o que já aplicou. fica salvo neste navegador.</div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap" id="main">
+  <div id="levels"></div>
+  <div class="empty" id="empty"><b>nada por aqui</b><span class="muted">tenta outra palavra, tira o filtro ou volta pra “tudo”.</span></div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <h2>sentiu falta de alguma ferramenta? <b>me conta.</b></h2>
+      <p>as ferramentas marcadas como “em breve” entram aqui conforme os módulos forem ao ar. se você quer uma aula ou um template novo, manda pelo formulário de sugestões.</p>
+      <p class="fine">casa de ferramentas · the higher path 2027 · lista atualizada em nov/2026</p>
+    </div>
+    <div class="row">
+      <a class="btn" id="sug" href="#" target="_blank" rel="noopener">sugerir aula ou ferramenta ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+const N = id => "https://studio2high.notion.site/" + id;
+const CANVA = {
+  portfolio:"https://www.canva.com/design/DAGkpuZc-2A/3LntmAwlhjOCbP4WDxGllQ/view?mode=preview",
+  proposta:"https://www.canva.com/design/DAGkpuT4zK4/X-XyElUOm7993Bqcq90I0Q/view?mode=preview",
+  onboarding:"https://www.canva.com/design/DAGkprpYVmc/A-3jfrDN_xHeBb_9v41RPg/view?mode=preview",
+  estrategia:"https://www.canva.com/design/DAGkpufhwNw/S_BJGJX3StC8Mj65yEQhjw/view?mode=preview",
+  aprovacao:"https://www.canva.com/design/DAGkpoZ83Fc/3Qi930UIgzK_ApEGqfFnNA/view?mode=preview",
+  report:"https://www.canva.com/design/DAGkpoRH5OY/OnTnHAZeb2nF9mHeMF7pNQ/view?mode=preview",
+  fluxograma:"https://www.canva.com/design/DAGoSUw5WVM/Nchmpyk1gzTklicl1LS9vw/view?mode=preview"
+};
+const HUB = N("1dd0f21ed05e80628700d6897d4a2cad");
+const SUGESTOES = N("2ee0f21ed05e8036a40eda2df88b9ce8");
+const GRUPO = "https://chat.whatsapp.com/Gr7qlfdLuvBFpbhUYaeqKH";
+
+const LESSONS = {
+"1.02":"como me tornei social media","1.04":"quero te conhecer","1.05":"onde você está hoje?","1.07":"overview do template Notion",
+"1.08":"overview dos templates de Canva","1.10":"grupo e suporte",
+"2.01":"o que é um social media","2.02":"o que engloba o serviço de social media","2.03":"serviços da social media",
+"2.04":"o que você entrega vale (e muito!)","2.05":"material de apoio: marketing para social media",
+"3.01":"sua marca de social media","3.03":"portfólio da social media","3.04":"captando clientes pelas redes sociais",
+"4.01":"estrutura de proposta e valores de mercado","4.02":"construindo sua precificação","4.03":"quanto cobrar sendo social media",
+"5.01":"como captar clientes sendo social media","5.02":"etapas do fechamento do cliente","5.03":"contrato da social media",
+"6.01":"fechei um cliente, e agora? (The Smooth Flow)","6.02":"briefing da social media","6.03":"onboarding, análise de perfil e plano de ação","6.04":"o que vem depois do onboarding",
+"7.01":"o que é estratégia de conteúdo?","7.02":"público","7.03":"análise de mercado","7.04":"crenças e posicionamento","7.05":"personalidade da marca e palavras-chave",
+"7.06":"tom de voz","7.07":"objetivo geral","7.08":"objetivos específicos (SMART)","7.09":"definindo os conteúdos nas plataformas","7.10":"7 dias, 7 pilares de conteúdo",
+"7.11":"calendário de conteúdo","7.12":"visão para a estratégia de conteúdo","7.13":"como apresentar uma estratégia de conteúdo","7.14":"vou avaliar sua estratégia!",
+"8.01":"o mapa das atividades da social media","8.02":"como organizar o seu fluxo de trabalho","8.03":"fluxo interno x fluxo com o cliente",
+"8.04":"construção dos conteúdos (um card = um conteúdo)","8.05":"como se manter inspirada para criar conteúdo","8.07":"IA na rotina da social media","8.08":"aprovação de conteúdos com o cliente",
+"9.01":"análise de resultados e relatório do mês","9.02":"reunião mensal, renovação e reajuste","9.03":"limites de escopo e pedidos extras",
+"10.01":"sua rotina no mês, na semana e no dia","10.02":"rotina possível: despejo de tarefas + timebox","10.03":"Notion na prática 1: sua empresa e suas tarefas","10.04":"Notion na prática 2: a página de cada cliente",
+"11.01":"você chegou até aqui: volte ao seu check-in",
+"B.01":"aulão: processos e rotinas da social media","B.02":"automatizando cobranças com o ASAAS"
+};
+
+const LEVELS = [
+  {id:"n1",name:"nível 1",title:"base",desc:"entender a profissão, o seu valor e a sua marca.",c:"var(--neon-soft)",dot:"var(--neon)"},
+  {id:"n2",name:"nível 2",title:"vender",desc:"preço, proposta, captação e fechamento.",c:"var(--acid)",dot:"var(--acid)"},
+  {id:"n3",name:"nível 3",title:"entregar",desc:"do onboarding à estratégia, produção e resultados.",c:"var(--lilac)",dot:"var(--lilac)"},
+  {id:"n4",name:"nível 4",title:"sustentar",desc:"rotina, organização e o fechamento do curso.",c:"#ffb38a",dot:"#ff8f5a"},
+  {id:"b",name:"bônus",title:"extras",desc:"aulão e ferramentas parceiras.",c:"var(--sunk)",dot:"var(--wine)"}
+];
+const MODULES = [
+  {id:"m1",n:"01",lv:"n1",name:"comece aqui"},
+  {id:"m2",n:"02",lv:"n1",name:"a profissão e o seu valor"},
+  {id:"m3",n:"03",lv:"n1",name:"sua marca de social media"},
+  {id:"m4",n:"04",lv:"n2",name:"preço e proposta"},
+  {id:"m5",n:"05",lv:"n2",name:"vender e fechar"},
+  {id:"m6",n:"06",lv:"n3",name:"início com o cliente"},
+  {id:"m7",n:"07",lv:"n3",name:"estratégia de conteúdo"},
+  {id:"m8",n:"08",lv:"n3",name:"produção e entrega"},
+  {id:"m9",n:"09",lv:"n3",name:"resultados e relacionamento"},
+  {id:"m10",n:"10",lv:"n4",name:"rotina e organização"},
+  {id:"m11",n:"11",lv:"n4",name:"encerramento"},
+  {id:"mb",n:"★",lv:"b",name:"bônus"}
+];
+const TYPES = {notion:"notion",canva:"canva",form:"formulário",comunidade:"comunidade",link:"link externo"};
+const STATUS = {ok:"disponível",upd:"nova versão chegando",soon:"em breve"};
+
+// st: ok = pronta · upd = link funciona, versão nova a caminho · soon = ainda não liberada
+const T = [
+ // M1
+ {id:"trajetoria",m:"m1",t:"notion",st:"ok",name:"sua trajetória até aqui",desc:"um exercício pra olhar pro caminho que te trouxe até a social media e pro que você quer daqui pra frente.",aulas:["1.02"],links:[["abrir",N("2930f21ed05e8047908ee1365ae1828b")]]},
+ {id:"conhecer",m:"m1",t:"form",st:"ok",name:"formulário quero te conhecer",desc:"me conta quem você é, onde está e o que espera do curso. é por aqui que eu começo a te acompanhar.",aulas:["1.04"],links:[["responder",N("28c0f21ed05e80f78b93e564d506ac84")]]},
+ {id:"checkin",m:"m1",t:"notion",st:"ok",name:"check-in da realidade",desc:"o retrato de onde você está hoje: clientes, rotina, preço e sensação. você volta nele no fim do curso pra ver o quanto andou.",aulas:["1.05","11.01"],links:[["abrir",N("1d60f21ed05e80348ae2c2db541eb810")]]},
+ {id:"hub",m:"m1",t:"notion",st:"ok",name:"the social media hub",desc:"o template de Notion do curso: sua empresa, tarefas, clientes, banco de conteúdos e aprovação num lugar só. duplica e usa como base de trabalho.",aulas:["1.07","8.04","8.08","10.03","10.04"],links:[["duplicar template",HUB]]},
+ {id:"guia-notion",m:"m1",t:"notion",st:"ok",name:"guia rápido do Notion",desc:"o básico do Notion explicado sem enrolação, pra você não travar na hora de usar o hub.",aulas:["1.07"],links:[["abrir",N("1d60f21ed05e8035bb70e290b01c807d")]]},
+ {id:"guia-canva",m:"m1",t:"notion",st:"ok",name:"guia rápido do Canva + 6 templates",desc:"como usar o Canva no dia a dia e onde estão os seis templates do curso (portfólio, proposta, onboarding, estratégia, aprovação e report).",aulas:["1.08"],links:[["abrir guia",N("1d60f21ed05e8031853cfc41c4b62369")]]},
+ {id:"grupo",m:"m1",t:"comunidade",st:"ok",name:"grupo The Social Media Club",desc:"o grupo de WhatsApp das alunas: avisos, dúvidas, troca e suporte durante o curso.",aulas:["1.10"],links:[["entrar no grupo",GRUPO]]},
+ // M2
+ {id:"oque-sm",m:"m2",t:"notion",st:"ok",name:"o que é um social media",desc:"o papel da social media, o que ela faz e o que não é responsabilidade dela.",aulas:["2.01"],links:[["abrir",N("2920f21ed05e801b834fd8283019a95f")]]},
+ {id:"escopo",m:"m2",t:"notion",st:"ok",name:"defina seu escopo",desc:"decide o que entra e o que fica de fora do seu serviço antes de falar com qualquer cliente.",aulas:["2.02"],links:[["abrir",N("defina-seu-escopo-1d70f21ed05e8073ba7aeb5f082efa11")]]},
+ {id:"servicos",m:"m2",t:"notion",st:"ok",name:"serviços da social media",desc:"o cardápio de serviços possíveis, pra você montar pacotes com clareza.",aulas:["2.03"],links:[["abrir",N("07_FERRAMENTA-DE-APOIO-AULA-Servi-os-da-Social-Media-1d90f21ed05e80b1be7aeb91f83dcd88")]]},
+ {id:"valor",m:"m2",t:"notion",st:"soon",name:"o que torna meu serviço valioso",desc:"um exercício pra você enxergar e conseguir explicar o valor do que entrega.",aulas:["2.04"],links:[]},
+ {id:"mkt",m:"m2",t:"notion",st:"ok",name:"marketing para social media",desc:"os conceitos de marketing que sustentam o trabalho de conteúdo, com as mentes que moldaram o marketing moderno.",aulas:["2.05"],links:[["marketing para social media",N("marketing-para-social-media-2920f21ed05e8098b47ef116274b1d6a")],["as mentes do mkt moderno",N("2930f21ed05e80769cedd6b71b03fe9d")]]},
+ // M3
+ {id:"workbook",m:"m3",t:"notion",st:"soon",name:"workbook sua marca de social media",desc:"quem você é, como quer ser vista e no que acredita, em formato de exercício guiado.",aulas:["3.01"],links:[]},
+ {id:"portfolio",m:"m3",t:"canva",st:"ok",name:"meu portfólio de social media",desc:"o passo a passo do portfólio no Notion e o template de portfólio no Canva pra você apresentar seu trabalho.",aulas:["3.03"],links:[["guia no notion",N("meu-portf-lio-de-social-media-1d90f21ed05e80c38cd4d1ee0bb1ea33")],["template no canva",CANVA.portfolio]]},
+ {id:"captando-redes",m:"m3",t:"notion",st:"ok",name:"captando clientes pelas redes sociais",desc:"como usar o seu próprio perfil pra atrair cliente sem virar vitrine de promoção.",aulas:["3.04"],links:[["abrir",N("captando-clientes-pelas-redes-sociais-1e10f21ed05e80c6b5cdcccade8e197d")]]},
+ // M4
+ {id:"proposta",m:"m4",t:"canva",st:"ok",name:"template de proposta",desc:"a proposta de serviços pronta pra editar no Canva, com a estrutura que eu uso.",aulas:["4.01"],links:[["template no canva",CANVA.proposta]]},
+ {id:"valores",m:"m4",t:"notion",st:"soon",name:"tabela de valores de mercado",desc:"referências de preço pra você ter um norte antes de montar a sua proposta.",aulas:["4.01"],links:[]},
+ {id:"precificacao",m:"m4",t:"notion",st:"ok",name:"kit de precificação",desc:"calcula seu custo, sua hora e o preço de cada pacote. a base pra cobrar sem chute.",aulas:["4.02","4.03"],links:[["abrir kit",N("kit-de-Precifica-o-1d80f21ed05e805f9edece684729ac32")]]},
+ // M5
+ {id:"captacao",m:"m5",t:"notion",st:"ok",name:"captação de clientes",desc:"onde e como encontrar cliente, com ações práticas pra semana.",aulas:["5.01"],links:[["abrir",N("capta-o-de-clientes-1e10f21ed05e8010845ed9ade86053d2")]]},
+ {id:"negociacoes",m:"m5",t:"notion",st:"ok",name:"respostas prontas para negociações",desc:"o que responder quando o cliente pede desconto, some ou diz que vai pensar. e o roteiro da chamada de descobrimento.",aulas:["5.02"],links:[["respostas prontas",N("respostas-prontas-para-negocia-es-1d90f21ed05e801cb614d56f4bb8127e")],["chamada de descobrimento",N("1fc0f21ed05e80e3a001e392f2964dc2")]]},
+ {id:"contrato",m:"m5",t:"notion",st:"ok",name:"contrato da social media",desc:"modelo de contrato com as cláusulas que protegem você e o cliente.",aulas:["5.03"],links:[["abrir modelo",N("13_FERRAMENTAS-DE-APOIO-AULA-contrato-da-Social-Media-1e10f21ed05e80b984d8fa616ff8b9ab")]]},
+ // M6
+ {id:"smooth",m:"m6",t:"notion",st:"ok",name:"The Smooth Flow",desc:"o passo a passo do que fazer assim que o cliente diz sim, pra começar sem bagunça.",aulas:["6.01"],links:[["abrir",N("The-Smooth-Flow-1e10f21ed05e80b89e53e7613ffa4b60")]]},
+ {id:"briefing",m:"m6",t:"notion",st:"upd",name:"briefing da social media",desc:"as perguntas certas pra entender o cliente antes de criar qualquer coisa. o briefing da fada e o da social media vão virar um só.",aulas:["6.02"],links:[["briefing da social media",N("14_FERRAMENTA-DE-APOIO-AULA-briefing-da-social-media-1e10f21ed05e80819341d249b1fc73aa")],["briefing da fada",N("2c40f21ed05e8025ba2ef3c7bd7a0865")]]},
+ {id:"onboarding",m:"m6",t:"canva",st:"ok",name:"onboarding, análise de perfil e plano de ação",desc:"o roteiro do onboarding, a análise do perfil do cliente e o plano de ação, com o template de apresentação no Canva.",aulas:["6.03"],links:[["guia no notion",N("15_FERRAMENTA-DE-APOIO-AULA-onboarding-an-lise-de-perfil-e-plano-de-a-o-1e20f21ed05e80229f2bf41511dabc29")],["template no canva",CANVA.onboarding]]},
+ {id:"pos-onb",m:"m6",t:"notion",st:"soon",name:"checklist do pós-onboarding",desc:"o que precisa estar pronto depois do onboarding pra entrar no ritmo do mês.",aulas:["6.04"],links:[]},
+ // M7
+ {id:"estrategia",m:"m7",t:"notion",st:"ok",name:"estratégia de conteúdo",desc:"o que é estratégia de conteúdo e como ela se diferencia de uma lista de pilares.",aulas:["7.01"],links:[["abrir",N("estrat-gia-de-conte-do-1e20f21ed05e809b935ded8e3ad98ddc")]]},
+ {id:"componentes",m:"m7",t:"notion",st:"ok",name:"componentes da estratégia",desc:"o documento que você preenche aula a aula: público, mercado, crenças, personalidade, tom de voz e objetivos. as seções de plataformas e visão entram em breve.",aulas:["7.02","7.03","7.04","7.05","7.06","7.07","7.08","7.09","7.12"],links:[["abrir",N("componentes-da-estrat-gia-1e20f21ed05e8051ad84c4115ba5c9c5")]]},
+ {id:"framework",m:"m7",t:"notion",st:"ok",name:"framework da estratégia",desc:"a estratégia inteira numa página, pra consultar enquanto monta a de cada cliente.",aulas:[],links:[["abrir",N("2c40f21ed05e8049b1c2c4681c6e099a")]]},
+ {id:"7pilares",m:"m7",t:"notion",st:"soon",name:"template 7 dias, 7 pilares",desc:"uma semana de conteúdo com um pilar por dia, pronta pra adaptar a cada cliente.",aulas:["7.10"],links:[]},
+ {id:"calendario",m:"m7",t:"notion",st:"soon",name:"template de calendário mensal",desc:"o calendário de conteúdo do mês, do planejamento à publicação.",aulas:["7.11"],links:[]},
+ {id:"apresentar",m:"m7",t:"canva",st:"ok",name:"template de estratégia",desc:"a apresentação da estratégia pro cliente, pronta pra editar no Canva.",aulas:["7.13"],links:[["template no canva",CANVA.estrategia]]},
+ {id:"avaliacao",m:"m7",t:"form",st:"ok",name:"formulário de avaliação de estratégia",desc:"manda a estratégia que você montou que eu avalio e te devolvo com comentários.",aulas:["7.14"],links:[["enviar estratégia",N("29f0f21ed05e80658ccee669c9993e44")]]},
+ // M8
+ {id:"taskdump",m:"m8",t:"notion",st:"soon",name:"mapa das atividades",desc:"o despejo de todas as tarefas da social media, pra você enxergar o trabalho inteiro antes de organizar.",aulas:["8.01"],links:[]},
+ {id:"fluxo",m:"m8",t:"notion",st:"upd",name:"fluxo de trabalho da social media",desc:"as 12 etapas do fluxo, do briefing à análise, separando o que é interno e o que passa pelo cliente. com o fluxograma no Canva.",aulas:["8.02","8.03"],links:[["as 12 etapas do fluxo",N("29f0f21ed05e805a8512e5362ceb95b9")],["fluxo de trabalho",N("2c60f21ed05e80878d63c761bb2c52e0")],["fluxograma no canva",CANVA.fluxograma]]},
+ {id:"inspirada",m:"m8",t:"notion",st:"ok",name:"como se manter inspirada + banco de sites",desc:"um guia prático pra não depender da inspiração e uma lista de sites e ferramentas pra criar.",aulas:["8.05"],links:[["guia prático",N("guia-pr-tico-como-se-manter-inspirada-para-criar-conte-do-1e80f21ed05e809283adc0a4ce3c5151")],["banco de sites & ferramentas",N("2ee0f21ed05e803ab5b7fbf500d0eaf8")]]},
+ {id:"prompts",m:"m8",t:"notion",st:"soon",name:"banco de prompts de IA",desc:"prompts pra usar a IA na pesquisa, no roteiro e na revisão, sem perder a sua voz.",aulas:["8.07"],links:[]},
+ {id:"aprovacao",m:"m8",t:"canva",st:"ok",name:"template de aprovação de posts",desc:"como mandar os conteúdos pro cliente aprovar de um jeito claro. usa junto com o hub.",aulas:["8.08"],links:[["template no canva",CANVA.aprovacao],["the social media hub",HUB]]},
+ // M9
+ {id:"report",m:"m9",t:"canva",st:"ok",name:"template de report de métricas",desc:"o relatório do mês pronto no Canva, pra mostrar resultado e próximos passos.",aulas:["9.01"],links:[["template no canva",CANVA.report]]},
+ {id:"performance",m:"m9",t:"notion",st:"soon",name:"tabela de performance",desc:"onde anotar os números de cada mês no Notion pra comparar e montar o report.",aulas:["9.01"],links:[]},
+ {id:"reuniao",m:"m9",t:"notion",st:"soon",name:"roteiro de reunião mensal",desc:"a pauta da reunião com o cliente: resultado, aprendizados, renovação e reajuste.",aulas:["9.02"],links:[]},
+ {id:"escopo-resp",m:"m9",t:"notion",st:"ok",name:"modelos de resposta para alinhar escopo",desc:"mensagens prontas pra quando o cliente pede algo fora do combinado.",aulas:["9.03"],links:[["abrir",N("1d80f21ed05e808ca692d43ccd0c005a")]]},
+ // M10
+ {id:"rotina",m:"m10",t:"notion",st:"soon",name:"mapa de rotina",desc:"sua rotina no mês, na semana e no dia, montada a partir do que você realmente entrega.",aulas:["10.01"],links:[]},
+ {id:"timebox",m:"m10",t:"notion",st:"soon",name:"planner de timebox",desc:"despejo de tarefas + blocos de tempo, pra uma rotina possível.",aulas:["10.02"],links:[]},
+ {id:"hub-pratica",m:"m10",t:"notion",st:"ok",name:"the social media hub na prática",desc:"as áreas de empresa, tarefas e clientes do hub, usadas nas duas aulas de Notion na prática.",aulas:["10.03","10.04"],links:[["abrir o hub",HUB]]},
+ // M11
+ {id:"carta",m:"m11",t:"notion",st:"soon",name:"carta de encerramento",desc:"o fechamento do curso, junto com a volta ao seu check-in da realidade.",aulas:["11.01"],links:[]},
+ // bônus
+ {id:"aulao",m:"mb",t:"link",st:"ok",name:"aulão: processos e rotinas",desc:"a apresentação do aulão de processos e rotinas da social media.",aulas:["B.01"],links:[["abrir apresentação","http://bit.ly/aulao-processos-e-rotinas"]]},
+ {id:"asaas",m:"mb",t:"link",st:"ok",name:"ASAAS",desc:"a plataforma que eu uso pra automatizar cobranças. o link é de indicação.",aulas:["B.02"],links:[["criar conta",'https://www.asaas.com/r/8911bdf3-52ba-4f40-b81d-06cde396dc38']]}
+];
+
+const PINS = [
+  {emo:"🪩",name:"the social media hub",note:"seu template de Notion",href:HUB,tag:"duplica primeiro"},
+  {emo:"💬",name:"grupo The Social Media Club",note:"avisos, dúvidas e suporte",href:GRUPO,tag:"whatsapp"},
+  {emo:"💌",name:"quero te conhecer",note:"o primeiro formulário do curso",href:N("28c0f21ed05e80f78b93e564d506ac84"),tag:"aula 1.04"},
+  {emo:"🪐",name:"check-in da realidade",note:"onde você está hoje",href:N("1d60f21ed05e80348ae2c2db541eb810"),tag:"aulas 1.05 e 11.01"}
+];
+
+// estado por aluna (só neste navegador)
+const KEY = "casa-thp-v1";
+let saved = {fav:[],done:[]};
+try{ const raw = localStorage.getItem(KEY); if(raw){ const p = JSON.parse(raw); saved.fav = p.fav||[]; saved.done = p.done||[]; } }catch(e){}
+const fav = new Set(saved.fav), done = new Set(saved.done);
+const persist = () => { try{ localStorage.setItem(KEY, JSON.stringify({fav:[...fav],done:[...done]})); }catch(e){} };
+
+const state = {q:"",view:"all",chip:"all"};
+const CHIPS = [{id:"all",label:"todos os níveis"}]
+  .concat(LEVELS.map(l=>({id:"lv:"+l.id,label:l.name+" · "+l.title,dot:l.dot})))
+  .concat(Object.entries(TYPES).map(([k,v])=>({id:"t:"+k,label:v})));
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+const modOf = id => MODULES.find(m=>m.id===id);
+
+function renderPins(){
+  $("#pins").innerHTML = PINS.map(p=>`<a class="pin" href="${esc(p.href)}" target="_blank" rel="noopener">
+    <span class="emo" aria-hidden="true">${p.emo}</span><b>${esc(p.name)}</b><span>${esc(p.note)}</span><i>${esc(p.tag)} ↗</i></a>`).join("");
+}
+function renderChips(){
+  $("#chips").innerHTML = CHIPS.map(c=>`<button type="button" class="chip" data-chip="${c.id}" aria-pressed="${state.chip===c.id}">${c.dot?`<span class="dot" style="--c:${c.dot}"></span>`:""}${esc(c.label)}</button>`).join("");
+}
+function renderStats(){
+  const ok = T.filter(t=>t.st!=="soon").length, soon = T.filter(t=>t.st==="soon").length;
+  $("#stats").innerHTML = `<span><b>${ok}</b>ferramentas liberadas</span><span><b>${soon}</b>chegando em breve</span><span><b>${fav.size}</b>nas suas ★</span><span><b>${done.size}</b>já usadas ✓</span>`;
+}
+function match(t){
+  if(state.view==="ok" && t.st==="soon") return false;
+  if(state.view==="fav" && !fav.has(t.id)) return false;
+  if(state.chip.startsWith("lv:") && modOf(t.m).lv!==state.chip.slice(3)) return false;
+  if(state.chip.startsWith("t:") && t.t!==state.chip.slice(2)) return false;
+  if(state.q){
+    const hay = norm([t.name,t.desc,TYPES[t.t],modOf(t.m).name,...t.aulas,...t.aulas.map(a=>LESSONS[a]||""),...t.links.map(l=>l[0])].join(" "));
+    if(!norm(state.q).split(/\s+/).filter(Boolean).every(w=>hay.includes(w))) return false;
+  }
+  return true;
+}
+function card(t){
+  const lessons = t.aulas.length ? `<div class="lessons">${t.aulas.map(a=>`<div><span class="mono">${a}</span><span>${esc(LESSONS[a]||"")}</span></div>`).join("")}</div>` : `<div class="lessons"><div><span class="mono">extra</span><span>material de consulta do módulo</span></div></div>`;
+  const links = t.links.length
+    ? `<div class="links">${t.links.map((l,i)=>`<a class="btn${i?" ghost":""}" href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join("")}</div>`
+    : `<div class="links"><span class="soon-note">libera junto com a aula</span></div>`;
+  return `<article class="card${t.st==="soon"?" soon":""}${done.has(t.id)?" is-done":""}" id="f-${t.id}">
+    <div class="card-top"><span class="type ${t.t}">${TYPES[t.t]}</span><span class="status ${t.st}">${STATUS[t.st]}</span>
+      <span class="icons">
+        <button type="button" class="ic fav" data-fav="${t.id}" aria-pressed="${fav.has(t.id)}" aria-label="favoritar ${esc(t.name)}" title="favoritar">★</button>
+        <button type="button" class="ic done" data-done="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="marcar ${esc(t.name)} como usada" title="já usei">✓</button>
+      </span></div>
+    <h4>${esc(t.name)}</h4>
+    <p class="desc">${esc(t.desc)}</p>
+    ${lessons}
+    ${links}
+  </article>`;
+}
+function render(){
+  let html = "", total = 0;
+  LEVELS.forEach(l=>{
+    let lvHtml = "";
+    MODULES.filter(m=>m.lv===l.id).forEach(m=>{
+      const items = T.filter(t=>t.m===m.id && match(t));
+      if(!items.length) return;
+      total += items.length;
+      const ready = items.filter(t=>t.st!=="soon").length;
+      lvHtml += `<section class="module" id="${m.id}" aria-labelledby="h-${m.id}">
+        <div class="mod-h"><span class="num" aria-hidden="true">${m.n}</span><h3 id="h-${m.id}">${esc(m.name)}</h3><span class="count">${ready}/${items.length} liberadas</span></div>
+        <div class="grid">${items.map(card).join("")}</div></section>`;
+    });
+    if(lvHtml) html += `<div class="level" style="--lc:${l.c}"><div class="level-h"><span class="tag">${esc(l.name)}</span><div><h2>${esc(l.title)}</h2><p>${esc(l.desc)}</p></div></div>${lvHtml}</div>`;
+  });
+  $("#levels").innerHTML = html;
+  $("#empty").classList.toggle("show", total===0);
+  if(state.view==="fav" && total===0) $("#empty").innerHTML = `<b>suas ★ estão vazias</b><span class="muted">toca na estrela de uma ferramenta pra ela aparecer aqui.</span>`;
+  else $("#empty").innerHTML = `<b>nada por aqui</b><span class="muted">tenta outra palavra, tira o filtro ou volta pra “tudo”.</span>`;
+  renderStats();
+}
+
+document.addEventListener("click", e=>{
+  const c = e.target.closest("[data-chip]");
+  if(c){ state.chip = c.dataset.chip; renderChips(); render(); return; }
+  const f = e.target.closest("[data-fav]");
+  if(f){ const id=f.dataset.fav; fav.has(id)?fav.delete(id):fav.add(id); persist(); render(); return; }
+  const d = e.target.closest("[data-done]");
+  if(d){ const id=d.dataset.done; done.has(id)?done.delete(id):done.add(id); persist(); render(); return; }
+});
+[["v-all","all"],["v-ok","ok"],["v-fav","fav"]].forEach(([id,v])=>{
+  $("#"+id).addEventListener("click",()=>{ state.view=v; document.querySelectorAll(".views button").forEach(b=>b.setAttribute("aria-pressed", b.id===id)); render(); });
+});
+$("#q").addEventListener("input", e=>{ state.q = e.target.value.trim(); render(); });
+$("#sug").href = SUGESTOES;
+
+renderPins(); renderChips(); render();
+if(location.hash){ const el = document.getElementById(location.hash.slice(1)); if(el) el.scrollIntoView(); }
+})();
+</script>
+
+</body>
+</html>
