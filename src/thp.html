@@ -1,0 +1,1230 @@
+<title>The Higher Path 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: uma trilha que sobe. Topo fixo com abas; cada aba é uma "estação" do projeto, do contexto à execução. */
+:root{
+  --bg:#f6f4fa;
+  --surface:#ffffff;
+  --sunk:#eeeaf5;
+  --ink:#1d1830;
+  --muted:#6b6482;
+  --line:#ddd7ea;
+  --accent:#c2306f;      /* orquídea · "higher" */
+  --accent-ink:#ffffff;
+  --accent-soft:#fbe5ef;
+  --n1:#d6458a; --n2:#e07a2a; --n3:#2f73c9; --n4:#2f9a69; --nb:#8a7b62;
+  --ok:#2f9a69; --warn:#c98a12; --bad:#cf4545; --info:#2f73c9;
+  --ok-soft:#e2f4ea; --warn-soft:#fbf0d8; --bad-soft:#fbe6e6; --info-soft:#e3eefb;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14111d; --surface:#1d1929; --sunk:#252033; --ink:#efeaf8; --muted:#a59dbc; --line:#342d47;
+    --accent:#ff6fa8; --accent-ink:#1a0d14; --accent-soft:#3a1b2b;
+    --n1:#ff79b4; --n2:#ffa45c; --n3:#6fa8ff; --n4:#5fd39b; --nb:#c4b393;
+    --ok:#5fd39b; --warn:#f0bb4a; --bad:#ff7b7b; --info:#6fa8ff;
+    --ok-soft:#173326; --warn-soft:#3a2e12; --bad-soft:#3d1c1f; --info-soft:#172a44;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14111d; --surface:#1d1929; --sunk:#252033; --ink:#efeaf8; --muted:#a59dbc; --line:#342d47;
+  --accent:#ff6fa8; --accent-ink:#1a0d14; --accent-soft:#3a1b2b;
+  --n1:#ff79b4; --n2:#ffa45c; --n3:#6fa8ff; --n4:#5fd39b; --nb:#c4b393;
+  --ok:#5fd39b; --warn:#f0bb4a; --bad:#ff7b7b; --info:#6fa8ff;
+  --ok-soft:#173326; --warn-soft:#3a2e12; --bad-soft:#3d1c1f; --info-soft:#172a44;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h2{font-size:1.65rem;font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:700}
+h4{font-size:.98rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* topo */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;padding-block:10px}
+.brand{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.1rem;letter-spacing:-.01em}
+.brand span{font-family:var(--f-mono);font-size:.75rem;color:var(--accent)}
+.sync{margin-left:auto;font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--warn);display:inline-block}
+.sync.cloud i{background:var(--ok)}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;text-decoration:none;color:var(--muted);font-weight:600;font-size:.88rem;padding:7px 12px;border-radius:999px;border:1px solid transparent}
+.tabs a:hover{color:var(--ink);background:var(--sunk)}
+.tabs a[aria-current="page"]{color:var(--accent-ink);background:var(--accent)}
+
+main{padding-block:28px 64px}
+section.view{display:flex;flex-direction:column;gap:28px}
+.head{display:flex;flex-direction:column;gap:6px;max-width:70ch}
+.head p{color:var(--muted)}
+
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.flat{background:transparent;border-style:dashed}
+.card ul,.card ol{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.p-info{background:var(--info-soft);color:var(--info)}
+.p-mute{background:var(--sunk);color:var(--muted)}
+.p-acc{background:var(--accent-soft);color:var(--accent)}
+
+/* hero / trilha */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:end}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{font-size:1.05rem;color:var(--muted);max-width:52ch;margin-top:10px}
+.count{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px}
+.count div{display:flex;flex-direction:column}
+.count b{font-family:var(--f-display);font-size:2rem;font-weight:800;line-height:1}
+.count span{font-size:.75rem;color:var(--muted)}
+.trail{width:100%;height:auto;max-width:100%}
+.trail text{font-family:var(--f-body);fill:var(--ink)}
+.trail .lbl{font-size:13px;font-weight:700}
+.trail .sub{font-size:11px;fill:var(--muted)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.kpi b{font-family:var(--f-display);font-size:1.7rem;font-weight:800;line-height:1.1}
+.kpi span{font-size:.8rem;color:var(--muted)}
+
+.bar{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.stack{height:22px;border-radius:6px}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+.modrow{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) 54px;gap:12px;align-items:center;font-size:.88rem}
+.modrow .bar{height:10px}
+.modrow .mono{text-align:right;color:var(--muted);font-size:.8rem}
+
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:14px 16px;border-radius:0 var(--r) var(--r) 0;display:flex;flex-direction:column;gap:6px}
+.callout b{font-family:var(--f-display)}
+
+/* tabelas */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+
+/* jornada */
+.levels{display:flex;flex-direction:column;gap:22px}
+.level{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px}
+.level-tag{display:flex;flex-direction:column;gap:4px;padding-top:4px}
+.level-tag b{font-family:var(--f-display);font-size:1.4rem;font-weight:800;color:var(--lv)}
+.level-tag span{font-size:.85rem;color:var(--muted)}
+.mods{display:grid;gap:12px}
+details.mod{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);border-top:3px solid var(--lv)}
+details.mod summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+details.mod summary::-webkit-details-marker{display:none}
+.mod-num{font-family:var(--f-mono);font-weight:600;color:var(--lv);font-size:.9rem}
+.mod-body{padding:0 16px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.mod-body .kv{display:flex;flex-direction:column;gap:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.78rem;padding:3px 8px;border-radius:6px;background:var(--sunk);border:1px solid var(--line);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.chip:hover{border-color:var(--accent)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+
+/* aulas */
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.filters select,.filters input{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:.88rem;max-width:100%}
+.filters input{min-width:0;flex:1 1 200px}
+.mod-group{display:flex;flex-direction:column;gap:6px}
+.mod-group > h3{display:flex;align-items:center;gap:10px;padding:6px 0}
+.aula{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.aula > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:52px minmax(0,1fr) auto auto 70px;gap:12px;align-items:center;padding:10px 14px}
+.aula > summary::-webkit-details-marker{display:none}
+.aula .code{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.aula .t{font-weight:600;min-width:0}
+.aula .mini{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.aula .mini .bar{width:64px;height:6px}
+.aula .mini span{font-size:.7rem;color:var(--muted)}
+.aula-body{padding:4px 14px 16px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;border-top:1px solid var(--line)}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:6px 14px;padding-top:12px}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:.88rem;cursor:pointer;padding:4px 0}
+.check input{width:17px;height:17px;accent-color:var(--accent);margin-top:2px;flex:none}
+.check.done span{color:var(--muted);text-decoration:line-through}
+.meta{display:flex;flex-direction:column;gap:8px;padding-top:12px;font-size:.86rem}
+.meta div{display:flex;flex-direction:column}
+.etapa-sel{background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:.8rem}
+
+/* fluxo de etapas */
+.flow{display:flex;gap:0;overflow-x:auto}
+.flow > div{flex:1 1 0;min-width:110px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);margin-left:-1px;display:flex;flex-direction:column;gap:2px}
+.flow > div:first-child{border-radius:var(--r) 0 0 var(--r);margin-left:0}
+.flow > div:last-child{border-radius:0 var(--r) var(--r) 0}
+.flow b{font-family:var(--f-display);font-size:1.6rem;font-weight:800}
+.flow span{font-size:.78rem;color:var(--muted)}
+
+/* metodologia */
+.steps{display:flex;flex-direction:column;gap:0;counter-reset:s}
+.steps li{list-style:none;position:relative;padding:0 0 14px 38px}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--f-mono);font-weight:600;font-size:.8rem;display:grid;place-items:center}
+.steps li::after{content:"";position:absolute;left:12px;top:28px;bottom:2px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps{padding:0;margin:0}
+
+/* comunicação: emails */
+.mails{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.mail{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.mail .n{font-family:var(--f-mono);font-size:.75rem;color:var(--accent)}
+.mail b{font-size:.92rem}
+.mail .s{font-size:.82rem;color:var(--muted)}
+
+/* timeline */
+.gantt{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow-x:auto}
+.gantt-inner{min-width:760px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;position:relative}
+.g-row{display:grid;grid-template-columns:230px minmax(0,1fr);gap:12px;align-items:center}
+.g-row .lab{font-size:.84rem;min-width:0}
+.g-row .lab small{display:block;color:var(--muted);font-size:.74rem}
+.g-track{position:relative;height:26px;background:var(--sunk);border-radius:6px}
+.g-bar{position:absolute;top:3px;bottom:3px;border-radius:5px;background:var(--accent);opacity:.9}
+.g-bar.rest{background:repeating-linear-gradient(45deg,var(--line) 0 6px,transparent 6px 12px);opacity:1}
+.g-scale{position:relative;height:18px;font-size:.7rem;color:var(--muted)}
+.g-scale span{position:absolute;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-mono)}
+.g-today{position:absolute;top:0;bottom:0;width:2px;background:var(--bad);z-index:2}
+.g-today.first::after{content:"hoje";position:absolute;top:-2px;left:4px;background:var(--surface);padding:0 4px;border-radius:4px;font-size:.66rem;color:var(--bad);font-weight:700}
+
+/* checklist */
+.blocks{display:flex;flex-direction:column;gap:10px}
+details.block{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.block > summary{list-style:none;cursor:pointer;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) 120px 56px;gap:14px;align-items:center}
+details.block > summary::-webkit-details-marker{display:none}
+details.block > summary .bar{height:8px}
+.block-list{padding:0 16px 14px;display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line)}
+.block-list .check{padding:7px 0;border-bottom:1px dashed var(--line)}
+.block-list .check:last-child{border-bottom:0}
+
+/* decisões */
+.dec{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start}
+.dec textarea{width:100%;min-height:38px;resize:vertical;background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:.85rem}
+
+.btn{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-weight:600;font-size:.85rem;cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+
+.foot{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .level{grid-template-columns:1fr;gap:8px}
+  .aula > summary{grid-template-columns:44px minmax(0,1fr) 62px}
+  .aula > summary .hide-sm{display:none}
+  .aula-body{grid-template-columns:1fr}
+  .modrow{grid-template-columns:minmax(0,1fr) 46px}
+  .modrow .bar{grid-column:1 / -1;grid-row:2}
+  details.block > summary{grid-template-columns:minmax(0,1fr) 50px}
+  details.block > summary .bar{display:none}
+  .sync b{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .bar i{transition:width .4s ease}
+}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>The Higher Path</b><span>2027</span></div>
+    <div class="sync" id="sync" title="Onde o progresso está salvo"><i></i><b id="syncTxt">salvo neste navegador</b></div>
+  </div>
+  <nav class="wrap tabs" id="tabs" aria-label="Seções">
+    <a href="#painel">Painel</a>
+    <a href="#estrutura">Estruturação</a>
+    <a href="#jornada">Níveis e módulos</a>
+    <a href="#aulas">Aulas</a>
+    <a href="#metodo">Metodologia</a>
+    <a href="#comunicacao">Comunicação</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#checklist">Checklist</a>
+    <a href="#decisoes">Decisões</a>
+  </nav>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<script>
+/* ============================================================
+   DADOS · extraídos da página "THE HIGHER PATH | 2027" no Notion
+   (consulta de 09/11/2026). O progresso marcado aqui fica salvo
+   no app; não volta automaticamente para o Notion.
+   ============================================================ */
+const NOTION = "https://app.notion.com/p/";
+const PAGE_ID = "3f10f21ed05e806ea5e5e1eff3209b6b";
+const DEADLINE = "2027-01-30";
+
+const LEVELS = [
+  {id:1,name:"Nível 1 · base",purpose:"saber quem é e o que vende",color:"--n1",mods:[1,2,3]},
+  {id:2,name:"Nível 2 · vender",purpose:"cobrar e fechar",color:"--n2",mods:[4,5]},
+  {id:3,name:"Nível 3 · entregar",purpose:"fazer o trabalho e demonstrar valor",color:"--n3",mods:[6,7,8,9]},
+  {id:4,name:"Nível 4 · sustentar",purpose:"organizar a rotina e continuar",color:"--n4",mods:[10,11]},
+];
+
+const MODULES = {
+  1:{name:"comece aqui",obj:"Apresentar o percurso, criar vínculo com a aluna e mostrar onde ficam aulas, materiais e canais de ajuda.",ent:"Check-in da realidade preenchido, ferramentas localizadas e um caminho inicial de estudo.",rev:"Atualizar referências à estrutura antiga e ao suporte. Explicar os encontros por formulário. Indicar os tutoriais de Notion (10.03/10.04) já no primeiro uso.",nid:"4130f21ed05e81b3b7dfea9b62061f45"},
+  2:{name:"a profissão e o seu valor",obj:"Dar clareza sobre o papel da social media, os serviços possíveis, o escopo e o valor do trabalho.",ent:"Lista de serviços e escopo inicial do que a aluna oferece.",rev:"Separar responsabilidade estratégica e execução técnica; criar o exercício sobre valor do serviço.",nid:"4130f21ed05e817f916ed61ee25ae857"},
+  3:{name:"sua marca de social media",obj:"Conectar identidade profissional, posicionamento, portfólio e presença nas redes à forma como a aluna quer atuar.",ent:"Base de posicionamento, portfólio e plano de conteúdo próprio.",rev:"Construir o workbook de marca e ligar identidade à oferta e à captação, sem repetir o M5.",nid:"4130f21ed05e81f49904ff6cd8c84fea"},
+  4:{name:"preço e proposta",obj:"Construir uma precificação e apresentar uma proposta coerente com o serviço, o escopo e a capacidade de entrega.",ent:"Cálculo de preço e proposta preenchida com um exemplo de serviço.",rev:"Mostrar exemplo completo de custos, horas, margem e limites. Valores de mercado em material atualizável, fora do vídeo.",nid:"4130f21ed05e8168a2b6ec8898b639fd"},
+  5:{name:"vender e fechar",obj:"Conduzir captação, conversa de descoberta, negociação e formalização do serviço.",ent:"Sequência de fechamento, proposta alinhada e contrato preenchido.",rev:"Conferir critérios para aceitar o cliente, acompanhamento da proposta, objeções e a passagem do sim para o onboarding.",nid:"4130f21ed05e810c9d2dd016632f838f"},
+  6:{name:"início com o cliente",obj:"Receber o cliente e transformar as informações iniciais em uma base de trabalho organizada.",ent:"Briefing, análise inicial, onboarding e checklist de pós-onboarding.",rev:"Unificar o briefing, completar o pós-onboarding e explicitar acessos, arquivos, responsáveis, canais e prazos.",nid:"4130f21ed05e81398bedd7154fa6a928"},
+  7:{name:"estratégia de conteúdo",obj:"Construir uma estratégia a partir do contexto do cliente, dos objetivos, do público e do posicionamento.",ent:"Estratégia apresentada e calendário que traduz a direção estratégica.",rev:"Terminar plataformas, visão, pilares e calendário nas ferramentas; ligar objetivos a indicadores; alinhar a avaliação ao formato coletivo.",nid:"4130f21ed05e81debaedc1c0e5ba810e"},
+  8:{name:"produção e entrega",obj:"Transformar planejamento em conteúdos organizados, produzidos e prontos para aprovação e publicação.",ent:"Três conteúdos completos (carrossel, Reels, imagem única) e fluxo de produção e aprovação.",rev:"Conferir se os roteiros demonstram legenda, carrossel e Reels. Publicação e agendamento ainda não têm aula própria.",nid:"4130f21ed05e810a822ac1dcb3ddf6f4"},
+  9:{name:"resultados e relacionamento",obj:"Ler resultados, comunicar aprendizados e conduzir o relacionamento contínuo com o cliente.",ent:"Relatório mensal interpretado, pauta de reunião e plano para o mês seguinte.",rev:"Relacionar indicadores aos objetivos, mostrar fonte, comparação e decisão; conferir ferramentas de reunião e escopo.",nid:"4130f21ed05e81c3afd7fdfa77d22f44"},
+  10:{name:"rotina e organização",obj:"Organizar empresa, tarefas, clientes e agenda para que o serviço possa ser mantido na prática.",ent:"Hub em uso e uma rotina de mês, semana e dia ajustada à realidade.",rev:"Demonstrar materiais preenchidos, com prioridades, capacidade e imprevistos. A aula 10.03 é o piloto de produção.",nid:"4130f21ed05e818e8c33f3a0aa7861d2"},
+  11:{name:"encerramento",obj:"Revisitar o ponto de partida e ajudar a aluna a reconhecer o que construiu e o que seguirá aplicando.",ent:"Comparação do check-in e plano de continuidade.",rev:"Vincular o encerramento às entregas práticas dos módulos e deixar claro o critério de conclusão.",nid:"4130f21ed05e811ca99fe470d64e2b4e"},
+  12:{name:"bônus",obj:"Materiais complementares à trilha principal.",ent:"Aulão de processos e rotinas + cobranças com ASAAS.",rev:"Conferir os bônus comerciais antigos antes de reutilizar.",nid:null},
+};
+function levelOf(m){ if(m===12) return null; return LEVELS.find(l=>l.mods.includes(m)); }
+
+const ETAPAS = ["a preparar","roteiro ok","gravado","editado","pronto pra subir","no ar"];
+const VIDEO = {
+  R:{label:"reaproveitar",cls:"p-ok",color:"--ok"},
+  G:{label:"gravar",cls:"p-mute",color:"--muted"},
+  RG:{label:"regravar",cls:"p-warn",color:"--warn"},
+  T:{label:"texto/formulário",cls:"p-info",color:"--info"},
+};
+const FORMATO = {c:"câmera",tc:"tela + câmera",t:"texto",f:"formulário"};
+const ROTEIRO = {n:"não precisa",h:"pronto no hub antigo",r:"rascunho na página da aula"};
+const CHECKS = [
+  ["rot","Roteiro revisado","texto"],
+  ["fer","Ferramenta pronta","texto"],
+  ["apo","Apoio visual pronto","design"],
+  ["cap","Capa pronta","design"],
+  ["leg","Legenda revisada","texto"],
+  ["gra","Gravação concluída","vídeo"],
+  ["edi","Edição concluída","vídeo"],
+  ["vre","Vídeo revisado","vídeo"],
+  ["pub","Publicado","publicação"],
+  ["tes","Teste como aluna","publicação"],
+];
+const TEXT_ONLY = ["fer","cap","leg","pub","tes"];
+
+// [código, título, módulo, origem(E/N), vídeo, formato, roteiro, etapa, duração, ferramenta, origem anterior, checks base (10 bits), id Notion (sufixo)]
+const AULAS_RAW = [
+["1.01","boas-vindas ao The Higher Path",1,"E","R","c","n",4,3,"nenhuma","Kiwify aula 1","0000011000","18e9acbfa4b7fee7971"],
+["1.02","como me tornei social media",1,"E","R","c","n",4,16,"sua trajetória até aqui","Kiwify aula 2","0100011000","182b48ef5e111d83cf2"],
+["1.03","como aproveitar o curso",1,"N","G","c","r",0,5,"casa de ferramentas","nova (no lugar do comeback)","0100000000","141b933fe3a5bf2b637"],
+["1.04","quero te conhecer",1,"E","R","c","n",4,1,"formulário quero te conhecer","Kiwify aula 3","0100011000","184a28fc25f6c9d98d5"],
+["1.05","onde você está hoje?",1,"E","R","c","n",4,5,"check-in da realidade","Kiwify aula 4","0100011000","19c851de50524e89531"],
+["1.06","ferramentas básicas que vamos utilizar",1,"E","R","c","n",4,5,"nenhuma","Kiwify aula 5","0000011000","16babd0c27e40c807b0"],
+["1.07","overview do template Notion",1,"E","RG","tc","h",1,12,"the social media hub + guia rápido do Notion","Kiwify aula 6 (absorve as antigas 54 e 55)","0100000000","122b811d59039b38046"],
+["1.08","overview dos templates de Canva",1,"E","RG","tc","h",1,11,"6 templates de Canva + guia rápido do Canva","Kiwify aula 7","0100000000","1168f7ec05638a3211f"],
+["1.09","casa de ferramentas THP",1,"E","T","t","n",0,null,"casa de ferramentas","Kiwify aula 8","0000000000","139ac1bfcddbe0d50ef"],
+["1.10","grupo e suporte",1,"E","T","t","n",4,null,"grupo The Social Media Club","Kiwify aula 9","0100000000","146a82ce2af8118e89b"],
+["2.01","o que é um social media",2,"E","R","c","n",4,5,"o que é um social media","Kiwify aula 11","0100011000","17a945af104f396eb1c"],
+["2.02","o que engloba o serviço de social media",2,"E","R","c","n",4,6,"defina seu escopo","Kiwify aula 12","0100011000","18cb53cd315836a7365"],
+["2.03","serviços da social media",2,"E","R","c","n",4,16,"serviços da social media","Kiwify aula 14","0100011000","1c5aa45cc40d636a48c"],
+["2.04","o que você entrega vale (e muito!)",2,"E","R","c","n",0,7,"o que torna meu serviço valioso (criar)","Kiwify aula 13","0000011000","18e8adffcb96faff8ff"],
+["2.05","material de apoio: marketing para social media",2,"E","R","c","n",4,1,"marketing para social media + as mentes que moldaram o mkt moderno","Kiwify aula 21","0100011000","1e59e38dc1d6194aa0f"],
+["3.01","sua marca de social media: quem você é, como quer ser vista e no que acredita",3,"E","G","c","h",1,14,"workbook sua marca de social media (criar)","antigas 61 + 62 + 63 (não gravadas)","0000000000","1598b13f00506a7f213"],
+["3.02","nichar ou não nichar?",3,"E","G","c","h",1,8,"nenhuma","antiga 66 (não gravada)","0000000000","1108af0cc66a2498aec"],
+["3.03","portfólio da social media",3,"E","R","c","n",4,8,"meu portfólio de social media + template de portfólio (Canva)","Kiwify aula 20","0100011000","152b711e9342e799093"],
+["3.04","captando clientes pelas redes sociais",3,"E","R","c","n",4,15,"captando clientes pelas redes sociais","Kiwify aula 19 (cobre a antiga 64)","0100011000","1508d3bd09a05098a07"],
+["3.05","criar conteúdo tem que ser fácil (mesmo que seja chato às vezes)",3,"E","G","c","h",1,8,"nenhuma","antiga 65 (não gravada)","0000000000","1b2a1fefc6b3eef4ca1"],
+["4.01","estrutura de proposta e valores de mercado",4,"E","RG","tc","r",0,12,"template de proposta (Canva) + tabela de valores de mercado (criar)","Kiwify aula 15","0000000000","1ca9502c2afde22af13"],
+["4.02","construindo sua precificação",4,"E","R","c","n",4,7,"kit de precificação","Kiwify aula 16","0100011000","1b79ac7d17479df37d4"],
+["4.03","quanto cobrar sendo social media",4,"E","R","c","n",4,12,"kit de precificação","Kiwify aula 17","0100011000","153a662e1474f0d5736"],
+["5.01","como captar clientes sendo social media",5,"E","R","c","n",4,15,"captação de clientes","Kiwify aula 18","0100011000","1fcbe9bffccbf7ca8ed"],
+["5.02","etapas do fechamento do cliente",5,"E","R","c","n",4,9,"respostas prontas para negociações + chamada de descobrimento","Kiwify aula 23","0100011000","16aa7cfe612cfd5a93f"],
+["5.03","contrato da social media",5,"E","G","tc","h",1,9,"contrato da social media (modelo)","Kiwify aula 24 (sem vídeo)","0100000000","1e083e0e1314b9b001d"],
+["6.01","fechei um cliente, e agora? (The Smooth Flow)",6,"E","R","c","n",4,10,"The Smooth Flow","Kiwify aula 22","0100011000","1e9a1bfe5791f1854ed"],
+["6.02","briefing da social media",6,"E","R","c","n",0,19,"briefing da social media (unificar com o briefing da fada)","Kiwify aula 25","0000011000","10aa857e8a399e9dcfe"],
+["6.03","onboarding, análise de perfil e plano de ação",6,"E","R","c","n",4,10,"onboarding, análise de perfil e plano de ação + template de onboarding (Canva)","Kiwify aula 28 (absorve a antiga 27)","0100011000","19cb1d4e173973e6924"],
+["6.04","o que vem depois do onboarding",6,"E","R","c","n",0,5,"checklist do pós-onboarding (criar)","Kiwify aula 29","0000011000","1cda073ea3aaf3e3858"],
+["7.01","o que é estratégia de conteúdo?",7,"E","R","c","n",4,9,"estratégia de conteúdo","Kiwify aula 31","0100011000","1f682eef2bef8948a0e"],
+["7.02","componentes da estratégia: público",7,"E","R","c","n",4,7,"componentes da estratégia › mapeamento de público","Kiwify aula 36","0100011000","102ae7dca018e00a5c2"],
+["7.03","componentes da estratégia: análise de mercado",7,"E","R","c","n",4,5,"componentes da estratégia › análise de mercado","Kiwify aula 34","0100011000","19b9654f9d9a5ccd9c2"],
+["7.04","componentes da estratégia: crenças e posicionamento",7,"E","R","c","n",4,8,"componentes da estratégia › crenças e posicionamento","Kiwify aula 38","0100011000","1419bb6eacac5f28b41"],
+["7.05","componentes da estratégia: personalidade da marca e palavras-chave",7,"E","R","c","n",4,4,"componentes da estratégia › personalidade e palavras-chave","Kiwify aula 35","0100011000","195a04cdc3bf39c083d"],
+["7.06","componentes da estratégia: tom de voz",7,"E","R","c","n",4,7,"componentes da estratégia › tom de voz","Kiwify aula 37","0100011000","1e19cb0e6fbaeefdfe3"],
+["7.07","componentes da estratégia: objetivo geral",7,"E","R","c","n",4,5,"componentes da estratégia › objetivo geral","Kiwify aula 32","0100011000","1218221ce390fc803cc"],
+["7.08","componentes da estratégia: objetivos específicos (SMART)",7,"E","R","c","n",4,7,"componentes da estratégia › objetivos específicos e SMART","Kiwify aula 33","0100011000","1619944c3af8b55c49b"],
+["7.09","componentes da estratégia: definindo os conteúdos nas plataformas",7,"E","R","c","n",0,5,"componentes da estratégia › plataformas (seção a criar)","Kiwify aula 39","0000011000","111922fd80b1ac12cfe"],
+["7.10","7 dias, 7 pilares de conteúdo",7,"E","R","c","n",0,10,"template 7 dias 7 pilares (criar)","Kiwify aula 41","0000011000","171894fe5755cbdf958"],
+["7.11","calendário de conteúdo",7,"E","R","c","n",0,11,"template de calendário mensal (criar)","Kiwify aula 42","0000011000","18798acc6b7d63fdc91"],
+["7.12","componentes da estratégia: visão para a estratégia de conteúdo",7,"E","R","c","n",0,3,"componentes da estratégia › visão (seção a criar)","Kiwify aula 40","0000011000","118bd76fff60ca82378"],
+["7.13","como apresentar uma estratégia de conteúdo",7,"E","G","tc","r",0,12,"template de estratégia (Canva)","Kiwify aula 43 (sem vídeo)","0100000000","1a89688c1704d75e3f5"],
+["7.14","vou avaliar sua estratégia!",7,"E","T","f","n",0,null,"formulário de avaliação de estratégia","Kiwify aula 45","0100000000","178baaef2d6b51ef800"],
+["8.01","o mapa das atividades da social media",8,"E","G","c","h",1,12,"mapa das atividades (task dump)","antiga 46 (não gravada)","0000000000","1338427ee15d42948d4"],
+["8.02","como organizar o seu fluxo de trabalho",8,"N","G","tc","h",1,10,"fluxo de trabalho da social media (versão única)","nova (roteiro já existia no hub)","0000000000","1499802dd26c93ac12d"],
+["8.03","fluxo interno x fluxo com o cliente",8,"E","G","tc","h",1,10,"fluxo de trabalho da social media (versão única)","antiga 47 (não gravada)","0000000000","14c96e0e30aa41ad09e"],
+["8.04","construção dos conteúdos (um card = um conteúdo)",8,"N","G","tc","h",1,12,"the social media hub (banco de conteúdos)","nova (roteiro revisado já existia no hub)","0000000000","1d7860bff1cf13a3239"],
+["8.05","como se manter inspirada para criar conteúdo",8,"E","R","c","n",4,6,"guia prático: como se manter inspirada + banco de sites & ferramentas","Kiwify aula 44","0100011000","1adac10d3eafbcfe190"],
+["8.06","criação de conteúdo em batch",8,"E","G","tc","h",1,9,"nenhuma (usa o calendário)","antiga 53 (não gravada)","0000000000","1b0aea8cf90a89b838b"],
+["8.07","IA na rotina da social media",8,"N","G","tc","r",0,12,"banco de prompts de IA (criar)","nova","0000000000","1abb921d482387d4d3d"],
+["8.08","aprovação de conteúdos com o cliente",8,"N","G","tc","h",1,10,"the social media hub + template de aprovação de posts (Canva)","nova (roteiro revisado já existia no hub)","0100000000","194abefe2c0b7e5a41f"],
+["9.01","análise de resultados e relatório do mês",9,"N","G","tc","h",1,14,"template de report de métricas (Canva) + tabela de performance no Notion (criar)","nova (roteiro revisado já existia no hub)","0000000000","126b56aedf376d90125"],
+["9.02","reunião mensal, renovação e reajuste",9,"N","G","c","r",0,10,"roteiro de reunião mensal (criar)","nova","0000000000","1389034eb863f36313b"],
+["9.03","limites de escopo e pedidos extras",9,"N","G","c","r",0,9,"modelos de resposta para alinhar escopo","nova (a ferramenta já existia na Casa)","0100000000","151ae1de45ff0a4370f"],
+["10.01","sua rotina no mês, na semana e no dia",10,"E","G","tc","h",1,14,"mapa de rotina (criar)","antigas 48 + 49 + 50 + 51 + 52 (não gravadas)","0000000000","1b2ab5be73cbb2ea60d"],
+["10.02","rotina possível: despejo de tarefas + timebox",10,"E","G","c","h",1,12,"planner de timebox (criar)","antigas 60 + 59 (não gravadas)","0000000000","1a89a21c6b269b6aca8"],
+["10.03","Notion na prática 1: sua empresa e suas tarefas",10,"E","G","tc","h",1,12,"the social media hub","antigas 56 + 57 (não gravadas)","0000000000","1b292aac028775a6097"],
+["10.04","Notion na prática 2: a página de cada cliente",10,"E","G","tc","h",1,10,"the social media hub (área de clientes)","antiga 58 (não gravada)","0000000000","17c9a39dfe5b4c6ed41"],
+["11.01","você chegou até aqui: volte ao seu check-in",11,"E","G","c","h",1,8,"carta de encerramento (criar) + check-in da realidade","antigas 67 + 68 (não gravadas)","0000000000","10d9366cffdef1bb9ec"],
+["11.02","quando travar, lembre: você é a sua melhor ferramenta",11,"E","G","c","h",1,7,"nenhuma","antigas 69 + 70 (não gravadas)","0000000000","196917dde10741bc0b9"],
+["B.01","aulão: processos e rotinas da social media",12,"E","R","tc","n",4,131,"apresentação do aulão","Kiwify aula 30","0100011000","141b6a0d6ed20d90db3"],
+["B.02","automatizando cobranças com o ASAAS",12,"E","R","c","n",4,8,"ASAAS (link de indicação)","Kiwify aula 26","0100011000","1269ccdd97d2d0e3c14"],
+];
+const AULAS = AULAS_RAW.map(r=>({
+  code:r[0],title:r[1],mod:r[2],orig:r[3],video:r[4],fmt:r[5],rot:r[6],etapa0:r[7],dur:r[8],ferr:r[9],origem:r[10],
+  base:Object.fromEntries(CHECKS.map((c,i)=>[c[0],r[11][i]==="1"])),
+  url:NOTION+"4120f21ed05e8"+r[12],key:"a"+r[0].replace(".","_")
+}));
+
+/* ---------- estruturação (cards da base ESTRUTURAÇÃO) ---------- */
+const SIT = {c:["Referência consolidada","p-ok"],r:["Revisar para 2027","p-warn"],d:["A definir","p-bad"],h:["Histórico","p-mute"]};
+const ESTRUTURA = [
+  {grp:"O curso",items:[
+    {t:"Explicação rápida",s:"c",body:"<p>Um curso criado por uma social media da vida real, que ajuda a organizar processos, captar clientes, se posicionar com estratégia e viver com mais leveza no digital.</p>"},
+    {t:"Descrição completa",s:"r",body:"<p>Curso prático para social medias que querem organizar serviços, processos, estratégias e rotina. Conecta posicionamento, oferta, precificação, captação, entrada do cliente, estratégia, produção, aprovação, resultados e organização.</p><p>Versão em construção: aulas gravadas, ferramentas de Notion e Canva e encontros coletivos com dúvidas enviadas antes por formulário. Plataforma e checkout próprios; as alunas atuais continuam no novo modelo.</p>"},
+    {t:"Promessa",s:"c",body:"<p>Sair do modo “meu deus eu não dou conta de nada” para o modo “sou uma social media que sabe o que está fazendo, com processos claros, cliente satisfeito e conteúdo em dia”.</p>"},
+    {t:"Objetivo geral",s:"r",body:"<p>Ajudar a social media a estruturar sua atuação: saber o que vende, como apresenta e cobra, como conduz o cliente, como planeja e entrega conteúdo e como organiza essa operação em uma rotina possível. Eixos: clareza, estratégia, postura profissional e organização.</p>"},
+    {t:"Entregáveis previstos",s:"r",body:"<ul><li>Aulas gravadas em 4 níveis e 11 módulos</li><li>Casa de Ferramentas ligada às tarefas</li><li>Social Media Hub (Notion)</li><li>Templates de Canva: portfólio, proposta, onboarding, estratégia, aprovação, relatório</li><li>Exercícios de aplicação</li><li>Encontros coletivos com dúvidas por formulário</li><li>Acesso das alunas atuais ao novo modelo</li></ul>"},
+    {t:"Diferenciais",s:"r",body:"<ul><li>Nasce da experiência real de Fran atendendo clientes</li><li>Conecta o que fazer, como e quando fazer</li><li>Organização, estratégia e posicionamento como um só trabalho</li><li>Templates e demonstrações para aplicar</li><li>Acompanha o serviço do primeiro contato à análise de resultados</li><li>Rotina que pode ser mantida</li></ul>"},
+    {t:"O que não tem no curso",s:"c",body:"<p>Não é curso técnico de design, tráfego pago ou edição, nem fórmula de dinheiro rápido.</p>"},
+    {t:"Preço",s:"c",body:"<p class='mono' style='font-size:1.5rem;font-weight:600'>R$ 2.420,00</p><p class='muted'>Meios de pagamento e parcelamento em aberto. Histórico: R$ 994,20 / R$ 1.224,20 cheio, R$ 724,20 lançamento, R$ 420–624,20 ex-alunas.</p>"},
+    {t:"Bônus",s:"d",body:"<p>Na grade: aulão de processos e rotinas + automatizando cobranças com o ASAAS.</p><p class='muted'>Bônus comerciais antigos (Hub, templates, 1:1 para 5/10 primeiras) divergem entre páginas. Nenhuma condição nova aprovada.</p>"},
+    {t:"FAQ do produto",s:"r",body:"<p>Aulas gravadas? Tempo de acesso? Certificado? Suporte? E se eu não gostar? Bônus? Formas de pagamento? Atualizar respostas para a oferta 2027.</p>"},
+  ]},
+  {grp:"Público",items:[
+    {t:"Pra quem é",s:"c",body:"<ul><li>Iniciantes que querem começar com o pé direito</li><li>Quem já está no mercado mas vive no caos</li><li>Quem quer organizar processos e trabalhar com estratégia</li><li>Quem quer uma rotina funcional e previsível</li><li>Quem quer aprender o que funciona no dia a dia</li></ul>"},
+    {t:"Pra quem não é",s:"c",body:"<ul><li>Quem já tem processos muito bem estruturados</li><li>Quem quer curso técnico de design, tráfego ou edição</li><li>Quem busca fórmula mágica de ficar rica em 7 dias</li></ul>"},
+    {t:"Dores",s:"c",body:"<ul><li>Perdidas com tanta demanda</li><li>Vivem apagando incêndio, sem processo</li><li>Insegurança para cobrar</li><li>Falta de clareza sobre o que oferecer</li><li>Inconsistência na criação</li><li>“Faço tudo e não sou valorizada”</li><li>Nunca trabalham com antecedência</li><li>Vida pessoal x rotina desequilibradas</li></ul>"},
+    {t:"Desejos",s:"c",body:"<ul><li>Rotina organizada e previsível</li><li>Entregar no prazo com leveza</li><li>Cobrar melhor e ser valorizada</li><li>Clientes que respeitam o trabalho</li><li>Dominar a profissão</li><li>Saber apresentar um plano estratégico</li><li>Saber o que fazer ao fechar um cliente</li><li>Estabilidade e propósito</li></ul>"},
+    {t:"Objeções",s:"c",body:"<ul><li>“Tem muito conteúdo gratuito”</li><li>“E se eu não conseguir aplicar?”</li><li>“Não tenho tempo”</li><li>“Sou meio iniciante”</li><li>“Não tenho dinheiro agora”</li><li>“Já tentei me organizar e não deu”</li><li>“Vou conseguir clientes?”</li><li>“Funciona com poucos seguidores?”</li></ul>"},
+    {t:"Mitos que o curso quebra",s:"c",body:"<ul><li>Social media tem que fazer tudo sozinha</li><li>Dá pra crescer sem organização</li><li>Cobrar barato é o único jeito de ter cliente</li><li>Tem que aceitar qualquer job</li><li>Ser social media é “ficar no Instagram”</li></ul>"},
+  ]},
+  {grp:"Identidade",items:[
+    {t:"Tom de voz",s:"r",body:"<p>Próximo, direto, realista e acolhedor. Fran fala do que viveu, sem postura de guru ou promessa de dinheiro fácil. Pode ter humor (“meu deus, não dou conta”), mas sempre claro e útil.</p><p class='muted'>“Eu sei como é viver apagando incêndio… existe um caminho mais leve, mais consciente e mais estratégico. E esse caminho começa aqui.”</p>"},
+    {t:"Quem é Fran de Campos",s:"r",body:"<p>Social media e criadora do THP, que construiu o método atendendo clientes reais. Revisar a bio para 2027.</p>"},
+    {t:"Sistema de crenças e mentalidade",s:"c",body:"<p>Organização como base de tudo; estratégia em vez de produzir por obrigação; posicionamento como forma de mostrar valor. Sair do improviso para um jeito de trabalhar com clareza, método e autonomia.</p>"},
+  ]},
+  {grp:"Experiência da aluna",items:[
+    {t:"Casa de Ferramentas THP",s:"r",body:"<p>Ferramentas por kit e por aula. Padrão de página: cabeçalho (módulo, aula, tempo, tipo) → o que sai pronto → faça → veja o exemplo → próximo passo. 21 prontas, 5 ajustar, 5 fundir, 2 corrigir, 17 construir.</p>"},
+    {t:"The Social Media Hub",s:"r",body:"<p>Template de Notion para empresa, tarefas, clientes e banco de conteúdos. Tutoriais nas aulas 10.03 e 10.04, indicados desde o M1.</p>"},
+    {t:"Encontros coletivos e suporte",s:"d",body:"<p>Confirmado: dúvidas de conteúdo enviadas antes por formulário e respondidas em encontros coletivos.</p><p class='muted'>Em aberto: frequência, duração, antecedência, período de participação, gravações, canal de suporte técnico.</p>"},
+    {t:"Plataforma própria e migração",s:"r",body:"<p>Área de membros e checkout próprios. Alunas atuais entram sem nova compra, preservando condições adquiridas (o FAQ antigo promete acesso vitalício).</p>"},
+    {t:"Avaliação de estratégia",s:"r",body:"<p>A aula 7.14 ainda promete devolutiva individual. Ajustar para formulário prévio + encontro coletivo, respeitando o que foi vendido antes.</p>"},
+  ]},
+];
+
+/* ---------- metodologia ---------- */
+const METODO = {
+  pilares:[
+    ["Organização","Centralizar informações, entender o fluxo do serviço, planejar a rotina e acompanhar as entregas."],
+    ["Estratégia","Decidir conteúdo a partir de objetivos, público, contexto e posicionamento, em vez de produzir por obrigação."],
+    ["Posicionamento","Entender o que a profissional oferece, como quer ser percebida e como demonstra o valor do trabalho."],
+  ],
+  fechamento:[
+    ["Primeiro contato","atender ou abordar com postura profissional"],
+    ["Conversa inicial","entender necessidades, contexto e expectativas"],
+    ["Apresentação da proposta","conectar o serviço ao que foi entendido"],
+    ["Alinhamento final","negociar condições e escopo com critério"],
+    ["Fechamento real","formalizar próximos passos, contrato e pagamento antes de executar"],
+  ],
+  smooth:[
+    ["Fechamento e cadastro","cadastro, contrato, confirmação de pagamento"],
+    ["Organização oficial","espaço do cliente no Notion, canal de comunicação, briefing"],
+    ["Análise e estratégia","onboarding, análise de perfil, plano de ação, estratégia"],
+    ["Criação e primeiros conteúdos","calendário, produção e aprovação"],
+  ],
+  pilares7:["Empresa","Educativo","Bastidores","Prova social","Interação","Lifestyle","Conexão"],
+};
+
+/* ---------- comunicação ---------- */
+const COMUNICACAO = [
+  {t:"Landing page",s:"r",note:"Copy antiga cita 6 módulos, preço antigo e bônus por ordem de compra. Atualizar para 11 módulos, R$ 2.420, checkout próprio e encontros coletivos.",parts:["Header: o caminho pra sair do caos","Identificação com o problema","Promessa","O que você vai aprender","Pra quem é / não é","Entregáveis + bônus","Preço e pagamento + garantia 7 dias","FAQ","Encerramento e reforço da promessa"]},
+  {t:"PDF do curso",s:"r",note:"Mesmo conteúdo da landing em formato de apresentação; revisar contagem de módulos, preço e condições.",parts:[]},
+  {t:"Anúncios card único",s:"r",note:"Revisar promessa e condições antes de veicular.",parts:[]},
+  {t:"Anúncios carrossel",s:"r",note:"Revisar promessa e condições antes de veicular.",parts:[]},
+  {t:"Kiwify",s:"h",note:"Plataforma antiga. Vai ser substituída pela plataforma e checkout próprios depois da migração.",parts:[]},
+];
+const EMAILS = [
+  ["O Desabafo","conexão","Já pensei em desistir de ser social media."],
+  ["O Diagnóstico","dor","Por que a rotina de social media parece sempre um incêndio?"],
+  ["A Virada","esperança","Existe um outro jeito."],
+  ["A Apresentação","produto","THE HIGHER PATH: o curso que eu queria ter feito lá no começo"],
+  ["O Alerta","escassez real","Abertas as inscrições – e com bônus pros primeiros!"],
+  ["O Bastidor","humanização","Nunca achei que ia lançar um curso assim"],
+  ["O Checkpoint","reforço de valor","Já tem gente aplicando e colhendo resultado"],
+  ["A Objeção","conversão","“Mas será que eu vou conseguir aplicar tudo?”"],
+  ["O Último Sinal","urgência","Últimas horas pra garantir os bônus"],
+  ["O Encerramento","decisão","Última chamada."],
+];
+const VIDEOS_VENDA = [
+  ["Documental","vlog com bastidores: agenda caótica vs. organizada, mostra Notion, Canva e cronograma"],
+  ["Storytelling com corte seco","“Social media é fácil? Fácil é se perder nas demandas…”"],
+  ["Reels/TikTok com voz em off","“Essa era eu…” → prints do Notion, conteúdo pronto, reuniões"],
+  ["Manual do Caos","lista engraçada do que fazia no caos: aceitava job sem briefing, criava às 3h…"],
+  ["Conversa direta","selfie intimista: “eu criei esse curso pra você que tá no meio do furacão”"],
+];
+
+/* ---------- timeline ---------- */
+const T_START = "2026-11-09", T_END = "2027-01-31";
+const JANELAS = [
+  {a:"2026-11-09",b:"2026-11-13",t:"Inventário + revisão da grade + especificação",out:"saber o que existe, o que falta e qual é a primeira versão",etapa:1},
+  {a:"2026-11-16",b:"2026-11-20",t:"Aula piloto 10.03 + teste técnico da plataforma",out:"uma aula completa em ambiente de teste; horas reais e arquitetura verificadas",etapa:2},
+  {a:"2026-11-23",b:"2026-12-04",t:"Notion/rotina + contrato/apresentação de estratégia; plataforma básica",out:"primeiros lotes concluídos; login e aula funcionando",etapa:2},
+  {a:"2026-12-07",b:"2026-12-18",t:"Marca/preço/overviews + checkout e painel",out:"produção avançando; compra de teste liberando acesso",etapa:3},
+  {a:"2026-12-21",b:"2027-01-03",t:"Margem de festas",out:"nenhuma entrega depende dessa janela",rest:true},
+  {a:"2027-01-04",b:"2027-01-15",t:"Completar produção, resultados e encerramento",out:"todas as gravações, ferramentas e aulas prontas para conferência",etapa:2},
+  {a:"2027-01-18",b:"2027-01-22",t:"Piloto com alunas atuais e migração em teste",out:"problemas de estudo, acesso e pagamento corrigidos",etapa:4},
+  {a:"2027-01-25",b:"2027-01-29",t:"Conferência final e transição",out:"curso, plataforma, checkout e acesso funcionando",etapa:5},
+  {a:"2027-01-30",b:"2027-01-31",t:"Margem final · prazo limite",out:"não colocar gravação essencial aqui",rest:true},
+];
+const ETAPAS_PROJ = [
+  ["Base","inventário, revisão da grade e arquivos","materiais têm destino e a lista de produção está clara"],
+  ["Produção","roteiros, ferramentas, design, gravação e edição","aulas completas, materiais testados e arquivos finais guardados"],
+  ["Plataforma e checkout","login, biblioteca, aula, progresso, materiais, encontros, administração e pagamento","compra de teste libera acesso; estudar e recuperar senha funcionam"],
+  ["Migração e piloto com alunas","matrículas, condições antigas, comunicado e testes","alunas atuais entram sem nova compra e os problemas do piloto foram tratados"],
+  ["Conferência final","percurso completo, correções e revisão da oferta","curso, ferramentas, pagamento, acesso e suporte funcionam conforme o que será comunicado"],
+];
+const SEMANA1 = [
+  ["seg 09/11","inventário dos vídeos, começando pelo M1","arquivos encontrados e ausências registrados nas aulas"],
+  ["ter 10/11","continuar vídeos, localizar roteiros e conferir ferramentas","separação entre o que existe, o que revisar e o que criar"],
+  ["qua 11/11","revisar a matriz curricular e os roteiros das lacunas","grade com decisões registradas e entregas práticas definidas"],
+  ["qui 12/11","escolher o caso demonstrativo, organizar arquivos, modelos de aula e capa","uma estrutura reutilizável para produzir"],
+  ["sex 13/11","especificar a plataforma mínima e preparar o piloto 10.03","telas e funções listadas + roteiro e ferramenta do piloto encaminhados"],
+];
+
+/* ---------- checklist mestre ---------- */
+const BLOCOS = [
+ ["f1","Agora · descobrir o que você já tem",[
+  "Organizar uma pasta principal do THP com vídeos, roteiros, ferramentas, design e exportados.",
+  "Localizar os cinco vídeos reaproveitáveis do módulo 1 e colar os links no quadro.",
+  "Conferir a reprodução de cada vídeo encontrado e anotar os ajustes necessários na aula.",
+  "Continuar o inventário dos outros módulos (todos os vídeos a localizar).",
+  "Localizar os 19 roteiros referenciados no hub antigo e identificar o que precisa de revisão."]],
+ ["f2","Depois do inventário · fechar a grade",[
+  "Confirmar onde entram publicação, agendamento e conferência do post no ar.",
+  "Conferir se a construção de conteúdos mostra uma legenda, um carrossel e um roteiro de Reels completos.",
+  "Indicar os tutoriais práticos do Notion desde o primeiro uso do Hub.",
+  "Alinhar a avaliação de estratégia ao formulário prévio e aos encontros coletivos.",
+  "Definir uma entrega prática por módulo e o que a aluna terá construído ao concluir.",
+  "Escolher um caso demonstrativo que conecte briefing, estratégia, conteúdo, aprovação e relatório.",
+  "Registrar a grade a produzir e separar as melhorias posteriores."]],
+ ["aj","Ajustes prioritários sem aumentar a grade",[
+  "Publicação e agendamento: incluir demonstração de agendar, conferir legenda/capa/link, publicar e checar o post no ar (tentar integrar ao M8).",
+  "Da pauta à peça: complementar 8.04 com exemplos completos de carrossel, Reels e imagem única.",
+  "Notion no momento de usar: indicar 10.03 e 10.04 no M1, sem duplicar aulas.",
+  "Estratégia em grupo: versão da 7.14 coerente com formulário prévio e encontro coletivo.",
+  "Projeto contínuo: mesmo caso para briefing, estratégia, conteúdo, aprovação e relatório.",
+  "Publicar com responsabilidade: revisão de erros, autorização de materiais do cliente e cuidado com dados.",
+  "Critério de conclusão: descrever o que a aluna precisa ter construído em cada módulo e no curso."]],
+ ["b01","01 · Organização dos arquivos e fechamento da grade",[
+  "Definir uma pasta principal do THP e subpastas: originais, roteiros, ferramentas, design, exportados e plataforma.",
+  "Localizar os vídeos reaproveitáveis e registrar o link de cada arquivo na aula correspondente; começar por um módulo.",
+  "Separar os arquivos que só existem na Kiwify e registrar quais ainda precisam ser recuperados.",
+  "Localizar os 19 roteiros do hub antigo e vincular o texto exato à aula nova.",
+  "Revisar os 6 rascunhos novos: como aproveitar o curso, proposta, apresentar estratégia, IA, reunião mensal e limites de escopo.",
+  "Conferir a lista de 61 aulas e 2 bônus contra os arquivos reais; registrar divergências.",
+  "Definir uma entrega prática observável por módulo e conferir a matriz de revisão.",
+  "Conferir se publicação/agendamento e criação de peças completas já estão nos roteiros.",
+  "Definir um caso demonstrativo contínuo, com briefing e dados fictícios identificados.",
+  "Fechar a grade para a produção e registrar separadamente as ideias para depois.",
+  "Separar o que foi prometido às alunas atuais e o que será a oferta para novas alunas.",
+  "Depois do piloto, medir tempo de roteiro, ferramenta, gravação, edição e publicação e recalibrar as semanas."]],
+ ["b02","02 · Textos do curso e das aulas",[
+  "Escrever a definição final do curso: para quem é, qual problema resolve e qual resultado a aluna constrói.",
+  "Escrever os limites da formação e os conhecimentos necessários para começar.",
+  "Escrever o mapa dos quatro níveis com o objetivo e a entrega dos 11 módulos.",
+  "Revisar boas-vindas para retirar referências à estrutura antiga.",
+  "Escrever o guia de estudo: percurso sugerido, como usar ferramentas e onde pedir ajuda.",
+  "Revisar os roteiros em lotes pequenos: abertura, problema, explicação, demonstração, tarefa e fechamento.",
+  "Escrever as tarefas e os critérios de conferência das aulas; vincular cada tarefa à ferramenta.",
+  "Revisar a descrição de cada aula: o que aprende, o que faz e qual material usa.",
+  "Retirar referências vencidas, campos em aberto e dependências de “próxima aula”.",
+  "Escrever as instruções de duplicação dos templates de Notion e Canva.",
+  "Escrever o texto do formulário de dúvidas e a explicação dos encontros coletivos.",
+  "Escrever o funcionamento da comunidade e do suporte técnico, com canais e prazo possíveis.",
+  "Escrever o encerramento e uma lista para a aluna conferir o que construiu.",
+  "Preparar texto alternativo à promessa de feedback individual da aula 7.14.",
+  "Revisar ortografia, nomes das ferramentas e consistência entre aula, material e página de vendas."]],
+ ["b03","03 · Design e materiais visuais",[
+  "Definir uma direção visual única do THP para área de membros, aulas, ferramentas e página de vendas.",
+  "Organizar os arquivos de logo, paleta, fontes e elementos gráficos existentes.",
+  "Criar um modelo de capa de módulo e produzir as 11 variações.",
+  "Criar um modelo de capa de aula e aplicar nas 61 aulas e nos 2 bônus.",
+  "Criar modelos de slides: abertura, conceito, passo a passo, exemplo, tarefa e encerramento.",
+  "Preparar slides só quando ajudarem; nas aulas práticas, preparar a tela e o exemplo preenchido.",
+  "Criar um padrão simples de texto na edição para conceitos, passos e perguntas da tarefa.",
+  "Revisar os seis templates Canva: portfólio, proposta, onboarding, estratégia, aprovação e report.",
+  "Criar capas e organização visual da Casa de Ferramentas na nova ordem.",
+  "Preparar imagens e textos de interface: login, biblioteca, módulos, aula, ajuda e estado vazio.",
+  "Preparar as peças da página de vendas e o modelo de divulgação dos encontros.",
+  "Conferir contraste, tamanho de texto e leitura no celular."]],
+ ["b04","04 · Ferramentas e exercícios",[
+  "Conferir os 30 registros da base de ferramentas existente.",
+  "Revisar o exercício “o que torna meu serviço valioso”.",
+  "Construir o workbook “sua marca de social media”.",
+  "Revisar o kit de precificação com exemplo preenchido, custos, horas e capacidade.",
+  "Preparar a tabela de referências de valores separada do vídeo, com data e fonte.",
+  "Unificar briefing da fada e briefing da social media.",
+  "Construir o checklist do pós-onboarding.",
+  "Unificar os materiais de fluxo em uma referência principal.",
+  "Completar a ferramenta de estratégia: plataformas, visão, pilares e calendário.",
+  "Construir ou revisar o template 7 dias, 7 pilares.",
+  "Construir ou revisar o calendário mensal ligado ao banco de conteúdos.",
+  "Preencher três cards demonstrativos: carrossel, Reels e imagem única.",
+  "Consolidar o banco de prompts de IA por etapa, com exemplos de revisão humana.",
+  "Preparar o fluxo de aprovação com versão, prazo, alterações e aprovação registrada.",
+  "Preparar o checklist de publicação e conferência do conteúdo no ar.",
+  "Construir a tabela de performance do mês com comparação e exemplo de cálculo.",
+  "Preparar o roteiro da reunião mensal e o plano de ações do mês seguinte.",
+  "Revisar os modelos de resposta para pedidos extras e limites de escopo.",
+  "Construir o mapa de rotina e o planner de timebox com espaço para imprevistos.",
+  "Revisar o Social Media Hub e preencher exemplos de empresa, tarefas e cliente.",
+  "Construir a carta de encerramento e a comparação com o check-in inicial.",
+  "Organizar a Casa por módulo e tarefa, sem materiais duplicados.",
+  "Testar a duplicação de cada ferramenta em uma conta de aluna e registrar o link na aula."]],
+ ["b05","05 · Vídeo e áudio",[
+  "Conferir se os 35 vídeos para reaproveitar estão acessíveis e com qualidade utilizável.",
+  "Assistir aos trechos que mencionam estrutura, datas, preço, ferramentas e suporte antes de cortar ou regravar.",
+  "Definir o padrão de gravação: câmera, tela com câmera e demonstrações.",
+  "Preparar cenário, áudio, luz, enquadramento e tela de demonstração sem dados privados.",
+  "Gravar um teste curto e conferir som, legibilidade da tela e enquadramento.",
+  "Produzir a aula piloto 10.03, do roteiro à versão publicada em teste.",
+  "Gravar as 25 aulas previstas em lotes, conforme roteiro e ferramenta ficarem prontos.",
+  "Editar com padrão simples: cortar erros e pausas, ajustar áudio e inserir apoios.",
+  "Preparar e revisar legendas ou transcrição das aulas.",
+  "Exportar os vídeos com nome padronizado e associar cada arquivo à aula.",
+  "Revisar início, meio e fim de cada exportação.",
+  "Enviar os vídeos para a hospedagem e testar no celular e no computador.",
+  "Conferir se capa, descrição, tarefa, vídeo e ferramenta correspondem à mesma aula.",
+  "Guardar originais e versões finais com cópia de recuperação."]],
+ ["b06","06 · Plataforma e área de membros",[
+  "Especificar a primeira versão: percurso completo da aluna e funções do painel administrativo.",
+  "Definir domínio, hospedagem, autenticação, banco de dados, vídeo, e-mail transacional e pagamento.",
+  "Levantar custo mensal e custo por uso antes de fechar a arquitetura.",
+  "Definir o controle de acesso por matrícula para aluna, visitante e administração.",
+  "Construir login, convite ou cadastro e recuperação de senha.",
+  "Construir a biblioteca com quatro níveis, 11 módulos e bônus.",
+  "Construir a página de aula com player, descrição, tarefa, materiais e avanço.",
+  "Salvar progresso e permitir retomar de onde a aluna parou.",
+  "Construir o acesso à Casa de Ferramentas e a explicação de como copiar os materiais.",
+  "Construir a área dos encontros com formulário, agenda e gravações.",
+  "Construir a página de ajuda e o canal para problemas de acesso.",
+  "Construir o painel para cadastrar, editar, ordenar e publicar módulos, aulas e materiais.",
+  "Construir a gestão de alunas, matrículas e permissões, incluindo acesso manual das atuais.",
+  "Conferir que quem não está matriculada não acessa conteúdo protegido nem o painel.",
+  "Definir como os vídeos serão entregues com acesso controlado e testar.",
+  "Preparar recuperação de dados e procedimento para falhas de acesso.",
+  "Testar navegação, formulários e player no celular.",
+  "Preparar certificado só depois de definir se integra a oferta e qual o critério."]],
+ ["b07","07 · Checkout próprio e acesso após a compra",[
+  "Especificar o checkout com a identidade do THP e integração com um processador de pagamentos.",
+  "Definir meios de pagamento, parcelamento, preço e condições da nova oferta.",
+  "Implementar resumo da compra, identificação da compradora e aceite das condições.",
+  "Implementar o pagamento pela integração escolhida, com dados de cartão no provedor.",
+  "Implementar os estados: aguardando, aprovado, recusado, cancelado e reembolsado.",
+  "Validar a confirmação do provedor antes de liberar a matrícula.",
+  "Evitar matrículas ou cobranças duplicadas em confirmações repetidas.",
+  "Liberar acesso automaticamente após aprovação e enviar instruções de entrada.",
+  "Tratar falhas na criação do acesso e permitir reconciliação manual pelo painel.",
+  "Preparar o fluxo de cancelamento, reembolso e atualização de permissão.",
+  "Configurar recebimentos e o fluxo de emissão de nota fiscal.",
+  "Testar compra aprovada, recusada, pendente, notificação repetida e reembolso.",
+  "Configurar a medição de início do checkout, compra aprovada e acesso liberado."]],
+ ["b08","08 · Encontros coletivos e formulário de dúvidas",[
+  "Definir frequência, duração, período de participação e antecedência para envio das dúvidas.",
+  "Criar o formulário com nome, e-mail da matrícula, módulo/aula, contexto, dúvida e o que já tentou.",
+  "Incluir campo opcional para link de material e orientação para retirar dados de clientes.",
+  "Incluir autorização para exibir o material no encontro e na gravação.",
+  "Escrever a confirmação do envio explicando que as dúvidas serão trabalhadas coletivamente.",
+  "Organizar a pauta por tema e recorrência antes de cada encontro.",
+  "Definir a regra para dúvidas que não couberem no encontro.",
+  "Preparar modelo de convite, lembrete e publicação da gravação com os temas.",
+  "Acrescentar o novo funcionamento às aulas 1.10 e 7.14 e à página de vendas.",
+  "Testar formulário, recebimento das respostas e acesso à gravação com matrícula de teste."]],
+ ["b09","09 · Migração das alunas atuais",[
+  "Exportar e guardar com acesso restrito a lista de alunas, matrículas e vendas.",
+  "Conferir os dados necessários para convidar as alunas à nova plataforma.",
+  "Mapear as condições de acesso e entregas que cada grupo já adquiriu.",
+  "Criar as matrículas das alunas atuais sem exigir nova compra.",
+  "Definir se e como o progresso antigo será levado; explicar limitações no comunicado.",
+  "Preparar o comunicado: o que muda, como entrar, recuperar senha e onde pedir ajuda.",
+  "Testar a migração com uma matrícula de teste antes de convidar as alunas.",
+  "Disponibilizar um período de transição e conferir os acessos antes de encerrar a área antiga.",
+  "Validar condições de pagamento em andamento antes de alterar o produto antigo.",
+  "Guardar a referência dos conteúdos antigos a que as alunas ainda têm direito."]],
+ ["b10","10 · Textos de interface, venda e comunicação",[
+  "Revisar a página de vendas conforme a grade realmente entregue.",
+  "Definir preço, parcelamento, duração do acesso e o que está incluído na nova compra.",
+  "Escrever FAQ sobre conteúdo, ferramentas, encontros, suporte, acesso e compra.",
+  "Preparar termos de uso, política de privacidade e política comercial.",
+  "Escrever textos de login, recuperação de senha, acesso bloqueado, pagamento pendente e falha.",
+  "Preparar e-mails de acesso liberado, recuperação de senha, confirmação da compra e migração.",
+  "Preparar o texto do checkout, confirmação de compra e próximos passos.",
+  "Atualizar links de venda do site, bio e comunicações só depois de validar o checkout.",
+  "Preparar peças de divulgação do curso pronto e selecionar provas sociais autorizadas.",
+  "Conferir que os mesmos termos de acesso, suporte e encontros aparecem na oferta e na área de membros."]],
+ ["b11","11 · Conferência final e conclusão",[
+  "Percorrer o curso inteiro com uma conta de aluna e registrar os problemas por aula.",
+  "Conferir todas as descrições, tarefas, capas, vídeos e links, incluindo os bônus.",
+  "Duplicar os materiais como aluna e verificar se a demonstração está separada dos arquivos pessoais.",
+  "Testar compra, liberação de acesso, e-mails, recuperação de senha e progresso.",
+  "Conferir isolamento entre alunas e acesso restrito ao painel administrativo.",
+  "Testar a migração e confirmar que as alunas atuais entram sem nova cobrança.",
+  "Fazer um piloto com alunas atuais e priorizar o que impede estudar, pagar ou acessar.",
+  "Corrigir os problemas do piloto e repetir os fluxos afetados.",
+  "Conferir a recuperação de dados e o atendimento a problemas de acesso.",
+  "Verificar que os encontros e o formulário estão acessíveis e com regras publicadas.",
+  "Registrar a versão publicada, os arquivos finais e as pendências de melhoria.",
+  "Considerar concluído só quando curso, ferramentas, plataforma, compra e migração passarem nos testes."]],
+];
+
+/* ---------- decisões ---------- */
+const DECISOES = [
+  {grp:"Já decidido",fixed:true,items:[
+    ["Prazo","concluir o curso e a operação em janeiro de 2027 (limite 30/01)"],
+    ["Rotina","Fran executa tudo, com um período de 4h por dia"],
+    ["Preço","R$ 2.420,00"],
+    ["Plataforma","área de membros e checkout próprios"],
+    ["Acompanhamento","dúvidas por formulário antes dos encontros coletivos"],
+    ["Alunas atuais","continuam no novo modelo, preservando as condições adquiridas"],
+  ]},
+  {grp:"Oferta e experiência",items:[
+    ["d_pag","Pagamento","meios de pagamento, parcelamento e eventuais condições específicas"],
+    ["d_enc","Encontros","frequência, duração, antecedência das dúvidas e período de participação"],
+    ["d_ace","Acesso","duração para novas compras e conferência dos direitos das alunas atuais"],
+    ["d_sup","Suporte","canal e prazo técnico; encaminhamento das dúvidas que não couberem no encontro"],
+    ["d_cer","Certificado e bônus","funcionamento, critério de emissão e bônus comerciais da nova oferta"],
+  ]},
+  {grp:"Produto e aprendizagem",items:[
+    ["d_gra","Aprovar a grade","estrutura de 4 níveis e 11 módulos depois de revisar os roteiros"],
+    ["d_pub","Publicação e pauta → peça","confirmar a cobertura no M8"],
+    ["d_ent","Entregas e conclusão","entregas de aplicação por módulo e critério de conclusão"],
+    ["d_tem","Templates","fechar a versão dos templates e da Casa de Ferramentas"],
+    ["d_caso","Caso do curso","qual marca fictícia atravessa briefing, estratégia, conteúdo e relatório"],
+  ]},
+  {grp:"Operação",items:[
+    ["d_arq","Arquitetura da plataforma","custo de operação e integrações da primeira versão"],
+    ["d_vid","Arquivos de vídeo","recuperação e vinculação dos arquivos"],
+    ["d_mig","Migração","forma de matrícula e migração das alunas atuais"],
+    ["d_data","Data comercial","quando abrir vendas da nova oferta (separado da conclusão)"],
+  ]},
+];
+</script>
+
+<script>
+/* ============================================================
+   ESTADO · salvo no app (nuvem quando disponível) + navegador
+   ============================================================ */
+const LS_KEY = "thp2027-progresso-v1";
+let STATE = {aulas:{},tasks:{},dec:{}};
+let dbRef = null, dbExists = false, saveTimer = null, saving = false, pendingSave = false;
+
+function lsRead(){ try{ const v = localStorage.getItem(LS_KEY); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function lsWrite(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(STATE)); }catch(e){} }
+function normalize(s){ s = s && typeof s==="object" ? s : {}; return {aulas:s.aulas||{},tasks:s.tasks||{},dec:s.dec||{}}; }
+(function(){ const s = lsRead(); if(s) STATE = normalize(s); })();
+
+function setSync(mode, txt){
+  const el = document.getElementById("sync");
+  el.classList.toggle("cloud", mode==="cloud");
+  document.getElementById("syncTxt").textContent = txt;
+}
+
+function scheduleSave(){
+  lsWrite();
+  if(!dbRef) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flush, 700);
+}
+async function flush(){
+  if(!dbRef) return;
+  if(saving){ pendingSave = true; return; }
+  saving = true;
+  try{
+    await dbRef.set(JSON.parse(JSON.stringify(STATE)));
+    dbExists = true;
+    setSync("cloud","salvo no app");
+  }catch(e){
+    setSync("local","não foi possível salvar no app · salvo neste navegador");
+  }
+  saving = false;
+  if(pendingSave){ pendingSave = false; flush(); }
+}
+
+(async function connect(){
+  if(!window.claude || typeof window.claude.use !== "function") return;
+  let db = null;
+  try{ db = await window.claude.use("db"); }catch(e){ db = null; }
+  if(!db) return;
+  try{ dbRef = db.doc("progresso/thp2027"); }catch(e){ dbRef = null; return; }
+  setSync("local","conectando…");
+  const timer = setTimeout(()=>setSync("local","sem conexão com o app · salvo neste navegador"),10000);
+  dbRef.onSnapshot(snap=>{
+    if(!snap.metadata || !snap.metadata.fromCache) clearTimeout(timer);
+    if(snap.exists){
+      dbExists = true;
+      const incoming = normalize(snap.data());
+      if(!(snap.metadata && snap.metadata.hasPendingWrites) && JSON.stringify(incoming)!==JSON.stringify(STATE)){
+        STATE = incoming;
+        lsWrite();
+        render();
+      }
+      setSync("cloud","salvo no app");
+    }else{
+      setSync("cloud","pronto para salvar no app");
+    }
+  }, err=>{
+    clearTimeout(timer);
+    dbRef = null;
+    setSync("local","salvo neste navegador");
+  });
+})();
+
+/* ---------- leitura do estado ---------- */
+function aulaState(a){
+  const s = STATE.aulas[a.key] || {};
+  const chk = Object.assign({}, a.base, s.chk||{});
+  const etapa = typeof s.etapa==="number" ? s.etapa : a.etapa0;
+  return {chk, etapa};
+}
+function applicable(a){ return a.video==="T" ? CHECKS.filter(c=>TEXT_ONLY.includes(c[0])) : CHECKS; }
+function aulaProgress(a){
+  const st = aulaState(a); const ap = applicable(a);
+  const done = ap.filter(c=>st.chk[c[0]]).length;
+  return {done,total:ap.length,pct:done/ap.length};
+}
+function setAulaCheck(key,c,val){
+  const s = STATE.aulas[key] || (STATE.aulas[key] = {});
+  s.chk = s.chk || {}; s.chk[c] = val; scheduleSave();
+}
+function setAulaEtapa(key,val){
+  const s = STATE.aulas[key] || (STATE.aulas[key] = {});
+  s.etapa = val; scheduleSave();
+}
+function taskKey(b,i){ return b+"_"+i; }
+function blockProgress(b){ const done = b[2].filter((_,i)=>STATE.tasks[taskKey(b[0],i)]).length; return {done,total:b[2].length}; }
+function allTasks(){ let d=0,t=0; BLOCOS.forEach(b=>{const p=blockProgress(b); d+=p.done; t+=p.total;}); return {done:d,total:t}; }
+
+/* ---------- utilidades ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = x => Math.round(x*100)+"%";
+const DAY = 86400000;
+const toD = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y,m-1,d); };
+function today(){ const n = new Date(); return new Date(n.getFullYear(),n.getMonth(),n.getDate()); }
+function daysLeft(){ return Math.max(0, Math.round((toD(DEADLINE)-today())/DAY)); }
+const fmtD = s => { const d = toD(s); return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0"); };
+function cssVar(n){ return `var(${n})`; }
+function videoPill(v){ const x = VIDEO[v]; return `<span class="pill ${x.cls}">${x.label}</span>`; }
+function etapaPill(i){ const cls = i===5?"p-ok":i>=2?"p-info":i===1?"p-warn":"p-mute"; return `<span class="pill ${cls}">${ETAPAS[i]}</span>`; }
+function modLabel(m){ return m===12 ? "Bônus" : "M"+m+" · "+MODULES[m].name; }
+function modColor(m){ const l = levelOf(m); return l ? cssVar(l.color) : "var(--nb)"; }
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+const VIEWS = {painel,estrutura,jornada,aulas,metodo,comunicacao,timeline,checklist,decisoes};
+let current = "painel";
+let aulaFilter = {mod:"",video:"",etapa:"",q:"",open:null};
+
+function painel(){
+  const tot = AULAS.length;
+  const prog = AULAS.map(aulaProgress);
+  const sumDone = prog.reduce((s,p)=>s+p.done,0), sumTot = prog.reduce((s,p)=>s+p.total,0);
+  const etapaCounts = ETAPAS.map((_,i)=>AULAS.filter(a=>aulaState(a).etapa===i).length);
+  const vids = Object.keys(VIDEO).map(k=>[k,AULAS.filter(a=>a.video===k).length]);
+  const t = allTasks();
+  const gravar = AULAS.filter(a=>a.video==="G"||a.video==="RG");
+  const gravadas = gravar.filter(a=>aulaState(a).chk.gra).length;
+  const levelPct = LEVELS.map(l=>{ const as = AULAS.filter(a=>l.mods.includes(a.mod)); const p = as.map(aulaProgress); return p.reduce((s,x)=>s+x.done,0)/p.reduce((s,x)=>s+x.total,0); });
+  const decOpen = DECISOES.filter(g=>!g.fixed).flatMap(g=>g.items).filter(d=>!(STATE.dec[d[0]]&&STATE.dec[d[0]].ok)).length;
+  const win = JANELAS.find(w=>today()>=toD(w.a) && today()<=toD(w.b)) || JANELAS.find(w=>toD(w.a)>today());
+
+  return `
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Projeto · prazo ${fmtD(DEADLINE)}/2027</div>
+      <h1>Do caos ao <em>caminho</em>: o THP inteiro em um só lugar.</h1>
+      <p class="lede">4 níveis, 11 módulos, 61 aulas e 2 bônus. Acompanhe produção, plataforma, comunicação e o que falta decidir até janeiro.</p>
+      <div class="count">
+        <div><b class="mono">${daysLeft()}</b><span>dias até o prazo</span></div>
+        <div><b class="mono">${pct(sumDone/sumTot)}</b><span>produção das aulas</span></div>
+        <div><b class="mono">${t.done}/${t.total}</b><span>entregas do checklist</span></div>
+      </div>
+    </div>
+    <div>${trailSVG(levelPct)}</div>
+  </div>
+
+  ${win ? `<div class="callout"><span class="eyebrow">Janela atual · ${fmtD(win.a)} a ${fmtD(win.b)}</span><b>${esc(win.t)}</b><span class="muted">Pronto quando: ${esc(win.out)}</span></div>` : ""}
+
+  <div class="kpis">
+    <div class="kpi"><b class="mono">${etapaCounts[5]}<span class="muted" style="font-size:1rem">/${tot}</span></b><span>aulas no ar</span></div>
+    <div class="kpi"><b class="mono">${gravadas}<span class="muted" style="font-size:1rem">/${gravar.length}</span></b><span>gravações e regravações feitas</span></div>
+    <div class="kpi"><b class="mono">${AULAS.filter(a=>aulaState(a).chk.rot).length}</b><span>roteiros revisados</span></div>
+    <div class="kpi"><b class="mono">${AULAS.filter(a=>aulaState(a).chk.fer).length}</b><span>ferramentas prontas</span></div>
+    <div class="kpi"><b class="mono">${decOpen}</b><span>decisões em aberto</span></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Fila de produção</h3>
+      <p class="muted" style="font-size:.85rem">Quantas aulas estão em cada etapa. Mude a etapa na aba Aulas.</p>
+      <div class="flow">${ETAPAS.map((e,i)=>`<div><b class="mono">${etapaCounts[i]}</b><span>${e}</span></div>`).join("")}</div>
+    </div>
+    <div class="card">
+      <h3>O que cada aula precisa de vídeo</h3>
+      <div class="bar stack">${vids.map(([k,n])=>`<i style="width:${n/tot*100}%;background:${cssVar(VIDEO[k].color)}" title="${VIDEO[k].label}: ${n}"></i>`).join("")}</div>
+      <div class="legend">${vids.map(([k,n])=>`<span><i style="background:${cssVar(VIDEO[k].color)}"></i>${n} ${VIDEO[k].label}</span>`).join("")}</div>
+      <p class="muted" style="font-size:.85rem">Nenhum dos 35 vídeos reaproveitáveis tinha arquivo vinculado no Notion. Isso pede inventário; não significa que se perderam.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Progresso por módulo</h3>
+    <p class="muted" style="font-size:.85rem">Soma das caixas de produção (texto, design, vídeo e publicação) de cada aula.</p>
+    <div style="display:flex;flex-direction:column;gap:10px">
+    ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>{
+      const as = AULAS.filter(a=>a.mod===m); const p = as.map(aulaProgress);
+      const d = p.reduce((s,x)=>s+x.done,0), tt = p.reduce((s,x)=>s+x.total,0);
+      return `<div class="modrow"><span>${esc(modLabel(m))} <span class="muted">· ${as.length}</span></span><div class="bar"><i style="width:${d/tt*100}%;background:${modColor(m)}"></i></div><span class="mono">${pct(d/tt)}</span></div>`;
+    }).join("")}
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <span class="eyebrow">Próxima ação no Notion</span>
+      <h3>Localizar os 5 vídeos reaproveitáveis do módulo 1</h3>
+      <p class="muted">e vincular os arquivos na base de aulas. Se não encontrar, anotar “não localizado” e seguir para a próxima.</p>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Aula piloto</span>
+      <h3>10.03 · Notion na prática 1: sua empresa e suas tarefas</h3>
+      <p class="muted">Uma aula completa, com o tempo real de produção registrado, para calibrar o ritmo das outras gravações. Até duas aulas em elaboração por vez; gravar em lote.</p>
+      <div><button class="btn" data-open-aula="a10_03">Abrir a aula piloto</button></div>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h4>Um período de 4h</h4>
+    <p class="muted">15 min para escolher a entrega → 90 min de produção → 15 min de pausa → 90 min de produção → 30 min para salvar, conferir e registrar o próximo passo.</p>
+  </div>`;
+}
+
+function trailSVG(levelPct){
+  const W=520,H=250, stepW=118, rise=46, x0=8, yBase=210;
+  let s = `<svg class="trail" viewBox="0 0 ${W} ${H}" role="img" aria-label="Trilha dos 4 níveis com o progresso de cada um">`;
+  let path = `M ${x0} ${yBase+18}`;
+  LEVELS.forEach((l,i)=>{
+    const x = x0 + i*(stepW+8), y = yBase - i*rise;
+    path += ` L ${x} ${y} L ${x+stepW} ${y}`;
+  });
+  s += `<path d="${path}" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 5"/>`;
+  LEVELS.forEach((l,i)=>{
+    const x = x0 + i*(stepW+8), y = yBase - i*rise, p = levelPct[i]||0;
+    s += `<rect x="${x}" y="${y}" width="${stepW}" height="12" rx="6" fill="var(--sunk)"/>`;
+    s += `<rect x="${x}" y="${y}" width="${Math.max(6,stepW*p)}" height="12" rx="6" fill="var(${l.color})"/>`;
+    s += `<text class="lbl" x="${x}" y="${y-30}">Nível ${l.id}</text>`;
+    s += `<text class="sub" x="${x}" y="${y-14}">${l.name.split("· ")[1]} · ${pct(p)}</text>`;
+  });
+  const lx = x0 + 3*(stepW+8) + stepW, ly = yBase - 3*rise;
+  s += `<circle cx="${lx}" cy="${ly+6}" r="7" fill="var(--accent)"/>`;
+  s += `</svg>`;
+  return s;
+}
+
+function estrutura(){
+  return `
+  <div class="head"><span class="eyebrow">Estruturação inicial</span><h2>O que é o The Higher Path</h2>
+  <p>Os cards da base ESTRUTURAÇÃO, reunidos por tema. A etiqueta mostra se o texto está consolidado, precisa de revisão para 2027 ou ainda está em aberto.</p>
+  <div class="legend" style="margin-top:6px">${Object.values(SIT).map(([l,c])=>`<span class="pill ${c}">${l}</span>`).join("")}</div></div>
+  ${ESTRUTURA.map(g=>`
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h3>${esc(g.grp)}</h3>
+      <div class="grid g3">${g.items.map(it=>`
+        <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h4>${esc(it.t)}</h4><span class="pill ${SIT[it.s][1]}">${SIT[it.s][0]}</span></div>${it.body}</div>`).join("")}
+      </div>
+    </div>`).join("")}`;
+}
+
+function jornada(){
+  return `
+  <div class="head"><span class="eyebrow">Estrutura em revisão · 4 níveis · 11 módulos</span><h2>A trilha da aluna, nível por nível</h2>
+  <p>Posicionamento vem antes da venda; preço e proposta ficam junto da decisão comercial; o cliente segue da entrada à estratégia, produção, aprovação e resultados; rotina sustenta tudo. Clique num módulo para ver objetivo, entrega e aulas.</p>
+  <div class="legend" style="margin-top:6px">${Object.entries(VIDEO).map(([k,v])=>`<span><i style="background:${cssVar(v.color)}"></i>${v.label}</span>`).join("")}</div></div>
+  <div class="levels">
+  ${LEVELS.map(l=>`
+    <div class="level" style="--lv:var(${l.color})">
+      <div class="level-tag"><b>Nível ${l.id}</b><span>${esc(l.name.split("· ")[1])}</span><span>${esc(l.purpose)}</span></div>
+      <div class="mods">${l.mods.map(m=>modCard(m)).join("")}</div>
+    </div>`).join("")}
+    <div class="level" style="--lv:var(--nb)">
+      <div class="level-tag"><b>Bônus</b><span>complementos</span></div>
+      <div class="mods">${modCard(12)}</div>
+    </div>
+  </div>`;
+}
+function modCard(m){
+  const M = MODULES[m]; const as = AULAS.filter(a=>a.mod===m);
+  const p = as.map(aulaProgress); const d=p.reduce((s,x)=>s+x.done,0), t=p.reduce((s,x)=>s+x.total,0);
+  const min = as.reduce((s,a)=>s+(a.dur||0),0);
+  return `<details class="mod">
+    <summary><span class="mod-num">${m===12?"B":"M"+m}</span><span><b>${esc(M.name)}</b> <span class="muted" style="font-size:.85rem">· ${as.length} aulas · ~${min} min</span></span><span class="mono muted" style="font-size:.8rem">${pct(d/t)}</span></summary>
+    <div class="mod-body">
+      <div class="kv"><span class="eyebrow">Objetivo</span><p>${esc(M.obj)}</p></div>
+      <div class="kv"><span class="eyebrow">Entrega da aluna</span><p>${esc(M.ent)}</p></div>
+      <div class="kv"><span class="eyebrow">O que revisar</span><p>${esc(M.rev)}</p></div>
+      <div class="kv" style="grid-column:1/-1"><span class="eyebrow">Aulas</span>
+        <div class="chips">${as.map(a=>`<button class="chip" data-open-aula="${a.key}"><i class="dot" style="background:${cssVar(VIDEO[a.video].color)}"></i><span class="mono">${a.code}</span> ${esc(a.title)}</button>`).join("")}</div>
+      </div>
+      ${M.nid?`<div><a href="${NOTION+M.nid}" target="_blank" rel="noopener">Abrir card do módulo no Notion ↗</a></div>`:""}
+    </div>
+  </details>`;
+}
+
+function aulas(){
+  const f = aulaFilter;
+  const list = AULAS.filter(a=>{
+    if(f.mod && String(a.mod)!==f.mod) return false;
+    if(f.video && a.video!==f.video) return false;
+    if(f.etapa!=="" && String(aulaState(a).etapa)!==f.etapa) return false;
+    if(f.q){ const q=f.q.toLowerCase(); if(!(a.title.toLowerCase().includes(q)||a.code.includes(q)||a.ferr.toLowerCase().includes(q))) return false; }
+    return true;
+  });
+  const mods = [...new Set(list.map(a=>a.mod))];
+  return `
+  <div class="head"><span class="eyebrow">Base AULAS · 61 aulas + 2 bônus</span><h2>Produção aula por aula</h2>
+  <p>Abra uma aula para marcar o checklist de texto, design, vídeo e publicação e mudar a etapa. Fila: a preparar → roteiro ok → gravado → editado → pronto pra subir → no ar.</p></div>
+  <div class="filters">
+    <select id="f-mod" aria-label="Módulo"><option value="">Todos os módulos</option>${[1,2,3,4,5,6,7,8,9,10,11,12].map(m=>`<option value="${m}" ${f.mod==m?"selected":""}>${esc(modLabel(m))}</option>`).join("")}</select>
+    <select id="f-video" aria-label="Vídeo"><option value="">Qualquer vídeo</option>${Object.entries(VIDEO).map(([k,v])=>`<option value="${k}" ${f.video===k?"selected":""}>${v.label}</option>`).join("")}</select>
+    <select id="f-etapa" aria-label="Etapa"><option value="">Qualquer etapa</option>${ETAPAS.map((e,i)=>`<option value="${i}" ${f.etapa===String(i)?"selected":""}>${e}</option>`).join("")}</select>
+    <input id="f-q" type="search" placeholder="Buscar aula ou ferramenta" value="${esc(f.q)}" aria-label="Buscar">
+    <span class="muted" style="font-size:.85rem">${list.length} aulas</span>
+  </div>
+  ${mods.length? mods.map(m=>`
+    <div class="mod-group">
+      <h3><i class="dot" style="background:${modColor(m)};width:10px;height:10px"></i>${esc(modLabel(m))}</h3>
+      ${list.filter(a=>a.mod===m).map(aulaRow).join("")}
+    </div>`).join("") : `<div class="card flat"><p>Nenhuma aula com esses filtros.</p></div>`}`;
+}
+function aulaRow(a){
+  const st = aulaState(a), p = aulaProgress(a), ap = applicable(a);
+  const open = aulaFilter.open===a.key;
+  return `<details class="aula" id="${a.key}" ${open?"open":""}>
+    <summary>
+      <span class="code">${a.code}</span>
+      <span class="t">${esc(a.title)}${a.orig==="N"?` <span class="pill p-acc">nova</span>`:""}</span>
+      <span class="hide-sm">${videoPill(a.video)}</span>
+      <span class="hide-sm">${etapaPill(st.etapa)}</span>
+      <span class="mini"><span class="bar"><i style="width:${p.pct*100}%;background:${modColor(a.mod)}"></i></span><span class="mono">${p.done}/${p.total}</span></span>
+    </summary>
+    <div class="aula-body">
+      <div>
+        <div class="checks">${ap.map(c=>`<label class="check ${st.chk[c[0]]?"done":""}"><input type="checkbox" data-aula="${a.key}" data-c="${c[0]}" ${st.chk[c[0]]?"checked":""}><span>${c[1]} <span class="muted" style="font-size:.75rem">· ${c[2]}</span></span></label>`).join("")}</div>
+        ${a.video==="T"?`<p class="muted" style="font-size:.8rem;margin-top:6px">Aula de texto/formulário: só as verificações aplicáveis.</p>`:""}
+      </div>
+      <div class="meta">
+        <div><span class="eyebrow">Etapa</span><select class="etapa-sel" data-etapa="${a.key}" aria-label="Etapa da aula ${a.code}">${ETAPAS.map((e,i)=>`<option value="${i}" ${st.etapa===i?"selected":""}>${e}</option>`).join("")}</select></div>
+        <div><span class="eyebrow">Vídeo · formato</span><span>${VIDEO[a.video].label} · ${FORMATO[a.fmt]}${a.dur?` · ${a.dur} min`:""}</span></div>
+        <div><span class="eyebrow">Roteiro</span><span>${ROTEIRO[a.rot]}</span></div>
+        <div><span class="eyebrow">Ferramenta</span><span>${esc(a.ferr)}</span></div>
+        <div><span class="eyebrow">Origem</span><span>${a.orig==="N"?"Nova":"Existente"} · ${esc(a.origem)}</span></div>
+        <div><a href="${a.url}" target="_blank" rel="noopener">Abrir card da aula no Notion ↗</a></div>
+      </div>
+    </div>
+  </details>`;
+}
+
+function metodo(){
+  const M = METODO;
+  return `
+  <div class="head"><span class="eyebrow">Metodologia</span><h2>Os frameworks que sustentam o curso</h2>
+  <p>As 5 etapas levam até o sim do cliente; o Smooth Flow começa depois do sim. Os dois precisam aparecer como uma sequência única.</p></div>
+  <div class="grid g3">${M.pilares.map(([t,d])=>`<div class="card"><span class="eyebrow">Pilar</span><h3>${t}</h3><p class="muted">${d}</p></div>`).join("")}</div>
+  <p class="muted">O posicionamento orienta a oferta, a estratégia dá direção ao trabalho e a organização permite executar e manter isso no dia a dia.</p>
+  <div class="grid g2">
+    <div class="card"><span class="eyebrow">M5 · vender e fechar</span><h3>As 5 etapas do fechamento</h3>
+      <ol class="steps">${M.fechamento.map(([t,d])=>`<li><b>${t}</b><br><span class="muted">${d}</span></li>`).join("")}</ol></div>
+    <div class="card"><span class="eyebrow">M6 · início com o cliente</span><h3>The Smooth Flow</h3>
+      <ol class="steps">${M.smooth.map(([t,d])=>`<li><b>${t}</b><br><span class="muted">${d}</span></li>`).join("")}</ol>
+      <p class="pill p-warn" style="align-self:flex-start">unificar a ordem de contrato e pagamento</p></div>
+  </div>
+  <div class="card"><span class="eyebrow">M7 · estratégia de conteúdo</span><h3>7 dias, 7 pilares de conteúdo</h3>
+    <p class="muted">Uma programação de temas para dar variedade e direção; a frequência se adapta à marca. Exemplos do roteiro original:</p>
+    <div class="grid g4" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr))">${M.pilares7.map((p,i)=>`<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px"><span class="mono muted" style="font-size:.75rem">dia ${i+1}</span><br><b>${p}</b></div>`).join("")}</div>
+    <ol style="margin:0;padding-left:1.1em"><li>Revisar objetivos, público e estratégia</li><li>Listar temas que fazem sentido</li><li>Selecionar e distribuir os pilares</li><li>Variar ideias e formatos dentro do pilar</li><li>Adaptar a frequência à capacidade da marca</li></ol>
+  </div>`;
+}
+
+function comunicacao(){
+  const b10 = BLOCOS.find(b=>b[0]==="b10"), p = blockProgress(b10);
+  return `
+  <div class="head"><span class="eyebrow">Comunicação e vendas</span><h2>Como o curso vai ser apresentado</h2>
+  <p>Todo o material de venda existente é histórico: foi escrito para a versão de 6 módulos com preço antigo. Antes de publicar, alinhar à grade entregue, ao preço de R$ 2.420 e às regras de encontros e acesso.</p></div>
+
+  <div class="grid g2">
+    ${COMUNICACAO.map(c=>`<div class="card"><div style="display:flex;justify-content:space-between;gap:8px"><h3>${c.t}</h3><span class="pill ${SIT[c.s][1]}">${SIT[c.s][0]}</span></div><p class="muted">${esc(c.note)}</p>${c.parts.length?`<ol class="steps" style="margin-top:4px">${c.parts.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:""}</div>`).join("")}
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h3>Sequência de e-mails de lançamento <span class="pill p-warn">revisar para 2027</span></h3>
+    <p class="muted" style="font-size:.88rem">Rever datas relativas, acesso vitalício para novas compras, bônus e prazos de última chamada.</p>
+    <div class="mails">${EMAILS.map((e,i)=>`<div class="mail"><span class="n">e-mail ${String(i+1).padStart(2,"0")} · ${e[1]}</span><b>${e[0]}</b><span class="s">“${esc(e[2])}”</span></div>`).join("")}</div>
+  </div>
+
+  <div class="card"><h3>Roteiros de vídeos de venda <span class="pill p-warn">revisar para 2027</span></h3>
+    <p class="muted" style="font-size:.88rem">Mostrar na tela a área de membros real. Tratar a transformação como proposta, sem garantir o mesmo resultado para todas.</p>
+    <div class="tbl"><table><thead><tr><th>#</th><th>Formato</th><th>Ideia</th></tr></thead><tbody>${VIDEOS_VENDA.map((v,i)=>`<tr><td class="mono">${i+1}</td><td><b>${v[0]}</b></td><td>${esc(v[1])}</td></tr>`).join("")}</tbody></table></div>
+  </div>
+
+  <div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h3>Tarefas de comunicação</h3><span class="mono muted">${p.done}/${p.total}</span></div>
+    <div class="block-list" style="border:0;padding:0">${b10[2].map((t,i)=>checkItem("b10",i,t)).join("")}</div>
+  </div>`;
+}
+
+function timeline(){
+  const s = toD(T_START), e = toD(T_END), span = (e-s)/DAY + 1;
+  const pos = d => ((toD(d)-s)/DAY)/span*100;
+  const ticks = []; for(let d=new Date(s); d<=e; d=new Date(d.getTime()+7*DAY)) ticks.push(d);
+  const tpos = ((today()-s)/DAY)/span*100;
+  return `
+  <div class="head"><span class="eyebrow">09/11/2026 → 30/01/2027 · 4h por dia</span><h2>Timeline do que deve ser feito</h2>
+  <p>Cinco períodos de 4h por semana, 12 semanas, com as festas (21/12 a 03/01) reservadas como margem. Plataforma e produção avançam em paralelo depois da aula piloto.</p></div>
+
+  <div class="gantt"><div class="gantt-inner">
+    <div class="g-row"><span></span><div class="g-scale">${ticks.map(d=>{const iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");return `<span style="left:${pos(iso)}%">${fmtD(iso)}</span>`;}).join("")}</div></div>
+    ${JANELAS.map((w,wi)=>`<div class="g-row"><div class="lab"><b>${esc(w.t)}</b><small>${fmtD(w.a)}–${fmtD(w.b)}${w.etapa?` · etapa ${w.etapa}`:""}</small></div>
+      <div class="g-track">${tpos>=0&&tpos<=100?`<span class="g-today${wi===0?" first":""}" style="left:${tpos}%"></span>`:""}<span class="g-bar ${w.rest?"rest":""}" style="left:${pos(w.a)}%;width:${(pos(w.b)-pos(w.a))+100/span}%" title="${esc(w.out)}"></span></div></div>`).join("")}
+  </div></div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <h3>As 5 etapas até concluir</h3>
+    <div class="tbl"><table><thead><tr><th>Etapa</th><th>Trabalho</th><th>Está concluída quando</th></tr></thead><tbody>
+    ${ETAPAS_PROJ.map((r,i)=>`<tr><td><b><span class="mono">${i+1}</span> · ${r[0]}</b></td><td>${r[1]}</td><td class="muted">${r[2]}</td></tr>`).join("")}
+    </tbody></table></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card"><h3>Primeira semana · 5 períodos</h3>
+      <ol class="steps">${SEMANA1.map(r=>`<li><b>${r[0]}</b> · ${r[1]}<br><span class="muted">${r[2]}</span></li>`).join("")}</ol></div>
+    <div class="card"><h3>Capacidade estimada</h3>
+      <p class="muted">240h brutas em 12 semanas; sem as duas semanas de festas, 200h.</p>
+      <div class="bar stack" style="height:26px">
+        <i style="width:42%;background:var(--n1)" title="aulas, ferramentas e design 84h"></i><i style="width:24%;background:var(--n3)" title="plataforma e checkout 48h"></i><i style="width:14%;background:var(--n2)" title="migração, comunicação e testes 28h"></i><i style="width:20%;background:var(--sunk)" title="margem 40h"></i>
+      </div>
+      <div class="legend"><span><i style="background:var(--n1)"></i>84h aulas/ferramentas/design</span><span><i style="background:var(--n3)"></i>48h plataforma/checkout</span><span><i style="background:var(--n2)"></i>28h migração/comunicação/testes</span><span><i style="background:var(--sunk);border:1px solid var(--line)"></i>40h margem</span></div>
+      <p class="muted" style="font-size:.85rem">É um envelope inicial. Cronometrar o piloto e testar a arquitetura até 20/11 mostra se a carga cabe.</p>
+    </div>
+  </div>`;
+}
+
+function checkItem(b,i,t){
+  const k = taskKey(b,i), on = !!STATE.tasks[k];
+  return `<label class="check ${on?"done":""}"><input type="checkbox" data-task="${k}" ${on?"checked":""}><span>${esc(t)}</span></label>`;
+}
+function checklist(){
+  const t = allTasks();
+  return `
+  <div class="head"><span class="eyebrow">Checklist mestre · ${t.total} entregas</span><h2>Tudo o que precisa existir até janeiro</h2>
+  <p>Abra só o bloco do trabalho do período. Marque uma entrega quando o arquivo, texto ou função existir e puder ser conferido.</p></div>
+  <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><b>Andamento geral</b><span class="mono">${t.done}/${t.total} · ${pct(t.done/t.total)}</span></div><div class="bar" style="height:12px"><i style="width:${t.done/t.total*100}%;background:var(--accent)"></i></div></div>
+  <div class="blocks">${BLOCOS.map(b=>{const p=blockProgress(b); return `
+    <details class="block" data-block="${b[0]}">
+      <summary><b>${esc(b[1])}</b><span class="bar"><i style="width:${p.done/p.total*100}%;background:${p.done===p.total?"var(--ok)":"var(--accent)"}"></i></span><span class="mono muted" style="text-align:right">${p.done}/${p.total}</span></summary>
+      <div class="block-list">${b[2].map((t,i)=>checkItem(b[0],i,t)).join("")}</div>
+    </details>`;}).join("")}</div>`;
+}
+
+function decisoes(){
+  return `
+  <div class="head"><span class="eyebrow">Direção do projeto</span><h2>Decisões</h2>
+  <p>Nenhuma trava a gravação; quase todas travam a venda. Marque quando decidir e anote o que ficou combinado.</p></div>
+  ${DECISOES.map(g=>`
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h3>${g.grp}</h3>
+      ${g.fixed? `<div class="tbl"><table><tbody>${g.items.map(d=>`<tr><td style="width:160px"><span class="pill p-ok">decidido</span> <b>${d[0]}</b></td><td>${esc(d[1])}</td></tr>`).join("")}</tbody></table></div>`
+      : `<div class="grid g2">${g.items.map(d=>{const s=STATE.dec[d[0]]||{}; return `
+        <div class="card"><div class="dec">
+          <input type="checkbox" id="${d[0]}" data-dec="${d[0]}" ${s.ok?"checked":""} style="width:18px;height:18px;accent-color:var(--accent);margin-top:3px">
+          <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+            <label for="${d[0]}"><b>${d[1]}</b> ${s.ok?'<span class="pill p-ok">decidido</span>':'<span class="pill p-bad">em aberto</span>'}</label>
+            <span class="muted" style="font-size:.86rem">${esc(d[2])}</span>
+            <textarea id="${d[0]}_n" data-note="${d[0]}" placeholder="O que ficou decidido…" aria-label="Anotação: ${esc(d[1])}">${esc(s.n||"")}</textarea>
+          </div></div></div>`;}).join("")}</div>`}
+    </div>`).join("")}`;
+}
+
+/* ============================================================
+   RENDER + EVENTOS
+   ============================================================ */
+function render(){
+  const app = document.getElementById("app");
+  const openBlocks = [...document.querySelectorAll("details.block[open]")].map(d=>d.dataset.block);
+  const openAulas = [...document.querySelectorAll("details.aula[open]")].map(d=>d.id);
+  const openMods = [...document.querySelectorAll("details.mod")].map(d=>d.open);
+  const active = document.activeElement && document.activeElement.id;
+  app.innerHTML = `<section class="view">${VIEWS[current]()}<div class="foot"><span>Fonte: página “THE HIGHER PATH | 2027” no Notion · dados de 09/11/2026</span><a href="${NOTION+PAGE_ID}" target="_blank" rel="noopener">Abrir no Notion ↗</a></div></section>`;
+  openBlocks.forEach(id=>{const d=app.querySelector(`details.block[data-block="${id}"]`); if(d) d.open=true;});
+  openAulas.forEach(id=>{const d=document.getElementById(id); if(d) d.open=true;});
+  const mods = app.querySelectorAll("details.mod"); if(mods.length===openMods.length) mods.forEach((d,i)=>d.open=openMods[i]);
+  if(active){ const el = document.getElementById(active); if(el && el.tagName!=="TEXTAREA"){ el.focus(); if(el.type==="search"){ const v=el.value; el.setSelectionRange(v.length,v.length);} } }
+  document.querySelectorAll("#tabs a").forEach(a=>a.setAttribute("aria-current", a.getAttribute("href")==="#"+current ? "page" : "false"));
+}
+
+function route(){
+  const h = (location.hash||"").replace("#","");
+  current = VIEWS[h] ? h : "painel";
+  render();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+
+document.addEventListener("change", e=>{
+  const t = e.target;
+  if(t.dataset.aula){ setAulaCheck(t.dataset.aula, t.dataset.c, t.checked); render(); }
+  else if(t.dataset.etapa){ setAulaEtapa(t.dataset.etapa, Number(t.value)); render(); }
+  else if(t.dataset.task){ if(t.checked) STATE.tasks[t.dataset.task]=true; else delete STATE.tasks[t.dataset.task]; scheduleSave(); render(); }
+  else if(t.dataset.dec){ const s = STATE.dec[t.dataset.dec] || (STATE.dec[t.dataset.dec]={}); s.ok = t.checked; scheduleSave(); render(); }
+  else if(t.id==="f-mod"){ aulaFilter.mod=t.value; render(); }
+  else if(t.id==="f-video"){ aulaFilter.video=t.value; render(); }
+  else if(t.id==="f-etapa"){ aulaFilter.etapa=t.value; render(); }
+});
+let noteTimer=null;
+document.addEventListener("input", e=>{
+  const t = e.target;
+  if(t.id==="f-q"){ aulaFilter.q=t.value; render(); }
+  else if(t.dataset.note){ const s = STATE.dec[t.dataset.note] || (STATE.dec[t.dataset.note]={}); s.n = t.value; clearTimeout(noteTimer); noteTimer=setTimeout(scheduleSave,500); }
+});
+document.addEventListener("click", e=>{
+  const b = e.target.closest("[data-open-aula]");
+  if(b){
+    const key = b.dataset.openAula;
+    aulaFilter = {mod:"",video:"",etapa:"",q:"",open:key};
+    if(current!=="aulas"){ location.hash = "aulas"; }
+    else render();
+    setTimeout(()=>{ const el=document.getElementById(key); if(el){ el.open=true; el.scrollIntoView({block:"center"}); } aulaFilter.open=null; },30);
+  }
+});
+
+route();
+</script>
